@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Avista-Sensors’s documentation! &#8212; Avista-Sensors 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to Avista-Sensors’s documentation!</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-avista-sensors-s-documentation">
+<h1>Welcome to Avista-Sensors’s documentation!<a class="headerlink" href="#welcome-to-avista-sensors-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="module-avista_sensors.manager_state">
+<span id="avista-sensors-manager-state"></span><h1>avista-sensors manager_state<a class="headerlink" href="#module-avista_sensors.manager_state" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="avista_sensors.manager_state.ManagerState">
+<em class="property">class </em><code class="sig-prename descclassname">avista_sensors.manager_state.</code><code class="sig-name descname">ManagerState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/manager_state.html#ManagerState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.manager_state.ManagerState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enum representing the various states of the processor manager</p>
+<dl class="py method">
+<dt id="avista_sensors.manager_state.ManagerState.from_str">
+<em class="property">static </em><code class="sig-name descname">from_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/manager_state.html#ManagerState.from_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.manager_state.ManagerState.from_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides an instance of the Role for the given string.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>label (str): String representation of ManagerState literal</p>
+</dd>
+<dt>Returns:</dt><dd><p>ManagerState: literal of ManagerSTate</p>
+</dd>
+<dt>Raises:</dt><dd><p>NotImplementedError: If value is not a defined enum literal of ManagerState</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-avista_sensors.processor_loader">
+<span id="avista-sensors-processor-loader"></span><h1>avista-sensors processor_loader<a class="headerlink" href="#module-avista_sensors.processor_loader" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="avista_sensors.processor_loader.dynamic_import">
+<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">dynamic_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">class_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#dynamic_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.dynamic_import" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows for the dynamic import and instantiation of a given class</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>module (str): The full name of the module holding the class
+class_name (str): The name of the class to be instantiated</p>
+</dd>
+<dt>Returns:</dt><dd><p>Instance of module.class_name if it specifies an actual class otherwise None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="avista_sensors.processor_loader.import_from">
+<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.import_from" title="Permalink to this definition">¶</a></dt>
+<dd><p>Imports a class from the given fully qualified class name</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>name (str): fully qualified class name</p>
+</dd>
+<dt>Returns:</dt><dd><p>class that was imported</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: if the provided class name is None or empty</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="avista_sensors.processor_loader.load_from_config">
+<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">load_from_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#load_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.load_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads required sensors from a configuration file</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>path (str): the base path for the location of configuration files</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="avista_sensors.processor_loader.load_from_json">
+<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">load_from_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#load_from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.load_from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a sensor from a JSON representation</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data (:obj: <cite>JSON</cite>): JSON specification of a sensor processor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="avista_sensors.processor_loader.load_sensor_from_dict">
+<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">load_sensor_from_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dct</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#load_sensor_from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.load_sensor_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a sensor from the information in the provided dict</p>
+<dl class="simple">
+<dt>Required fields:</dt><dd><p>module: name of the module
+cls: name of the class in the module
+name: name of the sensor
+pinout: list of dictionarys which are var, pin pairs</p>
+</dd>
+<dt>Args:</dt><dd><p>dct (dict): dictionary containing the information necessary to load a sensor</p>
+</dd>
+<dt>Returns:</dt><dd><p>None if the module or class information is missing, otherwise an instance of the sensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-avista_sensors.sensor_processor">
+<span id="avista-sensors-sensor-processor"></span><h1>avista-sensors sensor_processor<a class="headerlink" href="#module-avista_sensors.sensor_processor" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="avista_sensors.sensor_processor.SensorProcessor">
+<em class="property">class </em><code class="sig-prename descclassname">avista_sensors.sensor_processor.</code><code class="sig-name descname">SensorProcessor</code><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class for all sensor processors.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>_pinout (dict): mapping of variable names to pins on the IoT device
+_sensor_name (str): name of the sensor to which this processor belongs</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="avista_sensors.sensor_processor.SensorProcessor.add_pinout">
+<code class="sig-name descname">add_pinout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">var</span></em>, <em class="sig-param"><span class="n">pin</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.add_pinout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.add_pinout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a pin and var mapping to this processor</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>var (str): The string name of the pin
+pin (int): The value of the pin</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="avista_sensors.sensor_processor.SensorProcessor.get_name">
+<code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the name of the sensor to which the processor belongs</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Name of the sensor this processor collects data for</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="avista_sensors.sensor_processor.SensorProcessor.get_pin">
+<code class="sig-name descname">get_pin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">var</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.get_pin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.get_pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the pin associated with the provided variable name</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>var (str): name of the variable</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception, if the provided var is None or not in the</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="avista_sensors.sensor_processor.SensorProcessor.process">
+<code class="sig-name descname">process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ts</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Template method which collects data from the sensor and creates then creates the data point</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>ts (int): the timestamp at which this reading is associated with</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="avista_sensors.sensor_processor.SensorProcessor.remove_pinout">
+<code class="sig-name descname">remove_pinout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">var</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.remove_pinout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.remove_pinout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the pin mapping associated with the provided var</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>var (str): name of the pin mapping to be removed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="avista_sensors.sensor_processor.SensorProcessor.set_name">
+<code class="sig-name descname">set_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.set_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns the sensor name to which this processor belongs</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>name (str): The new name of the sensor to which this processor belongs</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception if the provided name is None or the Empty String</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-avista_sensors.impl.random_processor">
+<span id="avista-sensors-impl-random-processor"></span><h1>avista-sensors.impl random_processor<a class="headerlink" href="#module-avista_sensors.impl.random_processor" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="avista_sensors.impl.random_processor.RandomProcessor">
+<em class="property">class </em><code class="sig-prename descclassname">avista_sensors.impl.random_processor.</code><code class="sig-name descname">RandomProcessor</code><a class="reference internal" href="_modules/avista_sensors/impl/random_processor.html#RandomProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.impl.random_processor.RandomProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a simulated sensor providing a logarithmic data stream.</p>
+<p>The data provided represents the typical increase of temperature in the windings of an AC Motor</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>__base_ts (int): the base time stamp used in the calculation</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-avista_sensors.impl.simulated_processor">
+<span id="avista-sensors-impl-simulated-processor"></span><h1>avista-sensors.impl simulated_processor<a class="headerlink" href="#module-avista_sensors.impl.simulated_processor" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="avista_sensors.impl.simulated_processor.SimulatedProcessor">
+<em class="property">class </em><code class="sig-prename descclassname">avista_sensors.impl.simulated_processor.</code><code class="sig-name descname">SimulatedProcessor</code><a class="reference internal" href="_modules/avista_sensors/impl/simulated_processor.html#SimulatedProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.impl.simulated_processor.SimulatedProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>An example sensor processor which utilizes empirical data to simulate sensor readings</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>__data (np.Array): A numpy array of the data read in from a file
+__probs (list): list of probabilities associated with values
+__unique_elements (list): the list of unique values in the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Avista-Sensors’s documentation!</a></li>
+<li><a class="reference internal" href="#module-avista_sensors.manager_state">avista-sensors manager_state</a></li>
+<li><a class="reference internal" href="#module-avista_sensors.processor_loader">avista-sensors processor_loader</a></li>
+<li><a class="reference internal" href="#module-avista_sensors.sensor_processor">avista-sensors sensor_processor</a></li>
+<li><a class="reference internal" href="#module-avista_sensors.impl.random_processor">avista-sensors.impl random_processor</a></li>
+<li><a class="reference internal" href="#module-avista_sensors.impl.simulated_processor">avista-sensors.impl simulated_processor</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to Avista-Sensors’s documentation!</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Isaac Griffith.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
+    </div>
+  </body>
+</html>

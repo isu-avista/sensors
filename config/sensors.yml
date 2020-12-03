@@ -1,0 +1,18 @@
+---
+sensors:
+  - module: avista_sensors.impl.random_processor
+    cls: RandomProcessor
+    name: Test
+    pinout:
+      - var: x
+        pin: 1
+      - var: y
+        pin: 2
+  - module: avista_sensors.impl.random_processor
+    cls: RandomProcessor
+    name: Test2
+    pinout:
+      - var: x
+        pin: 3
+      - var: y
+        pin: 4

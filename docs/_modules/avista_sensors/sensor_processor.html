@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>avista_sensors.sensor_processor &#8212; Avista-Sensors 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_processor</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for avista_sensors.sensor_processor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">avista_data.data_point</span> <span class="kn">import</span> <span class="n">DataPoint</span>
+<span class="kn">from</span> <span class="nn">avista_data</span> <span class="kn">import</span> <span class="n">db</span>
+<span class="kn">from</span> <span class="nn">avista_data.sensor</span> <span class="kn">import</span> <span class="n">Sensor</span>
+
+
+<div class="viewcode-block" id="SensorProcessor"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor">[docs]</a><span class="k">class</span> <span class="nc">SensorProcessor</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abstract base class for all sensor processors.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _pinout (dict): mapping of variable names to pins on the IoT device</span>
+<span class="sd">        _sensor_name (str): name of the sensor to which this processor belongs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructs a new sensor processor&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<div class="viewcode-block" id="SensorProcessor.set_name"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.set_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assigns the sensor name to which this processor belongs</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The new name of the sensor to which this processor belongs</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception if the provided name is None or the Empty String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;name cannot be none or empty&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span> <span class="o">=</span> <span class="n">name</span></div>
+
+<div class="viewcode-block" id="SensorProcessor.get_name"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the name of the sensor to which the processor belongs</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Name of the sensor this processor collects data for</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span></div>
+
+<div class="viewcode-block" id="SensorProcessor.add_pinout"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.add_pinout">[docs]</a>    <span class="k">def</span> <span class="nf">add_pinout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a pin and var mapping to this processor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            var (str): The string name of the pin</span>
+<span class="sd">            pin (int): The value of the pin</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">pin</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">pin</span></div>
+
+<div class="viewcode-block" id="SensorProcessor.remove_pinout"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.remove_pinout">[docs]</a>    <span class="k">def</span> <span class="nf">remove_pinout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes the pin mapping associated with the provided var</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            var (str): name of the pin mapping to be removed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SensorProcessor.get_pin"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.get_pin">[docs]</a>    <span class="k">def</span> <span class="nf">get_pin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the pin associated with the provided variable name</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            var (str): name of the variable</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception, if the provided var is None or not in the</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown var&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">has_pin_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">==</span> <span class="n">pin</span>
+
+    <span class="k">def</span> <span class="nf">_create_data_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructs a data point with the given value and timestamp and commit the changes to the database</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (float): the measured value</span>
+<span class="sd">            ts (int): the timestamp</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="n">DataPoint</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+        <span class="n">sensor</span> <span class="o">=</span> <span class="n">Sensor</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="n">sensor</span><span class="o">.</span><span class="n">add_data_point</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SensorProcessor.process"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Template method which collects data from the sensor and creates then creates the data point</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ts (int): the timestamp at which this reading is associated with</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_sensor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_data_point</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span></div>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_read_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Abstract method in which the reading of data from a sensor should be executed</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ts (int): timestamp of the data to be collected</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: value of the associated sensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_processor</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Isaac Griffith.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
+    </div>
+  </body>
+</html>

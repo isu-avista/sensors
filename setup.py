@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="avista_sensor",
+    name="avista-sensors",
     version="0.1.0",
     author="Isaac Griffith",
     author_email="grifisaa@isu.edu",

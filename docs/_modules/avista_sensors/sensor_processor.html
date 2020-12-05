@@ -68,7 +68,7 @@
 <span class="sd">            Exception if the provided name is None or the Empty String</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;name cannot be none or empty&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;name cannot be none or empty&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span> <span class="o">=</span> <span class="n">name</span></div>
 
 <div class="viewcode-block" id="SensorProcessor.get_name"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -85,16 +85,27 @@
 <span class="sd">        Args:</span>
 <span class="sd">            var (str): The string name of the pin</span>
 <span class="sd">            pin (int): The value of the pin</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception if the provided var name is None or empty or if the pin is less than 1 or greater than 40</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">pin</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">pin</span></div>
+        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;var cannot be None or empty&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pin</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">pin</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;pin must be between 1 and 40, inclusive&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">pin</span></div>
 
 <div class="viewcode-block" id="SensorProcessor.remove_pinout"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.remove_pinout">[docs]</a>    <span class="k">def</span> <span class="nf">remove_pinout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Removes the pin mapping associated with the provided var</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            var (str): name of the pin mapping to be removed</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception if the provided var name is None or empty</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;var cannot be None or empty&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SensorProcessor.get_pin"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.get_pin">[docs]</a>    <span class="k">def</span> <span class="nf">get_pin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
@@ -104,14 +115,30 @@
 <span class="sd">            var (str): name of the variable</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            Exception, if the provided var is None or not in the</span>
+<span class="sd">            Exception, if the provided var is None or not in the pinout</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown var&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span></div>
 
-    <span class="k">def</span> <span class="nf">has_pin_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">==</span> <span class="n">pin</span>
+<div class="viewcode-block" id="SensorProcessor.has_pin_out"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.has_pin_out">[docs]</a>    <span class="k">def</span> <span class="nf">has_pin_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests whether a the pinout provided (var, pin) is associated with this sensor processor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            var (str): the name of the pin</span>
+<span class="sd">            pin (int): the pin number</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            True if the pinout (var, pin) is associated with this processor, False otherwise.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">             Exception if the var is None or empty or if the pin is None, less than 1 or greater than 40.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;var cannot be None or Empty&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pin</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">pin</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;pin cannot be None, &lt; 1 or &gt; 40&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">==</span> <span class="n">pin</span></div>
 
     <span class="k">def</span> <span class="nf">_create_data_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructs a data point with the given value and timestamp and commit the changes to the database</span>
@@ -119,21 +146,28 @@
 <span class="sd">        Args:</span>
 <span class="sd">            value (float): the measured value</span>
 <span class="sd">            ts (int): the timestamp</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the newly created DataPoint</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dp</span> <span class="o">=</span> <span class="n">DataPoint</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">)</span>
         <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
         <span class="n">sensor</span> <span class="o">=</span> <span class="n">Sensor</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
         <span class="n">sensor</span><span class="o">.</span><span class="n">add_data_point</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
         <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dp</span>
 
 <div class="viewcode-block" id="SensorProcessor.process"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Template method which collects data from the sensor and creates then creates the data point</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            ts (int): the timestamp at which this reading is associated with</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            The created data point</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_sensor</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_create_data_point</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span></div>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_sensor</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_data_point</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span></div>
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">_read_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>

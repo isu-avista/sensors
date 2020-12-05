@@ -56,7 +56,7 @@
 <span class="sd">    Raises:</span>
 <span class="sd">        Exception: if the provided class name is None or empty</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="ow">is</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;can not import nothing&quot;</span><span class="p">)</span>
     <span class="n">components</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
     <span class="n">mod</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -90,7 +90,7 @@
 <span class="sd">        module: name of the module</span>
 <span class="sd">        cls: name of the class in the module</span>
 <span class="sd">        name: name of the sensor</span>
-<span class="sd">        pinout: list of dictionarys which are var, pin pairs</span>
+<span class="sd">        pinout: list of dictionaries which are var, pin pairs</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        dct (dict): dictionary containing the information necessary to load a sensor</span>

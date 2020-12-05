@@ -122,7 +122,7 @@ class_name (str): The name of the class to be instantiated</p>
 <dt>Required fields:</dt><dd><p>module: name of the module
 cls: name of the class in the module
 name: name of the sensor
-pinout: list of dictionarys which are var, pin pairs</p>
+pinout: list of dictionaries which are var, pin pairs</p>
 </dd>
 <dt>Args:</dt><dd><p>dct (dict): dictionary containing the information necessary to load a sensor</p>
 </dd>
@@ -151,6 +151,8 @@ _sensor_name (str): name of the sensor to which this processor belongs</p>
 <dt>Args:</dt><dd><p>var (str): The string name of the pin
 pin (int): The value of the pin</p>
 </dd>
+<dt>Raises:</dt><dd><p>Exception if the provided var name is None or empty or if the pin is less than 1 or greater than 40</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -171,7 +173,22 @@ pin (int): The value of the pin</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>var (str): name of the variable</p>
 </dd>
-<dt>Raises:</dt><dd><p>Exception, if the provided var is None or not in the</p>
+<dt>Raises:</dt><dd><p>Exception, if the provided var is None or not in the pinout</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="avista_sensors.sensor_processor.SensorProcessor.has_pin_out">
+<code class="sig-name descname">has_pin_out</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">var</span></em>, <em class="sig-param"><span class="n">pin</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.has_pin_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.has_pin_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether a the pinout provided (var, pin) is associated with this sensor processor</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>var (str): the name of the pin
+pin (int): the pin number</p>
+</dd>
+<dt>Return:</dt><dd><p>True if the pinout (var, pin) is associated with this processor, False otherwise.</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception if the var is None or empty or if the pin is None, less than 1 or greater than 40.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -183,6 +200,8 @@ pin (int): The value of the pin</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>ts (int): the timestamp at which this reading is associated with</p>
 </dd>
+<dt>Return:</dt><dd><p>The created data point</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -192,6 +211,8 @@ pin (int): The value of the pin</p>
 <dd><p>Removes the pin mapping associated with the provided var</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>var (str): name of the pin mapping to be removed</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception if the provided var name is None or empty</p>
 </dd>
 </dl>
 </dd></dl>

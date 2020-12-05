@@ -27,7 +27,7 @@ class SensorProcessor(ABC):
             Exception if the provided name is None or the Empty String
         """
         if name is None or name == "":
-            Exception("name cannot be none or empty")
+            raise Exception("name cannot be none or empty")
         self._sensor_name = name
 
     def get_name(self):
@@ -44,16 +44,27 @@ class SensorProcessor(ABC):
         Args:
             var (str): The string name of the pin
             pin (int): The value of the pin
+
+        Raises:
+            Exception if the provided var name is None or empty or if the pin is less than 1 or greater than 40
         """
-        if var is not None and 0 < pin <= 40:
-            self._pinout[var] = pin
+        if var is None or var == "":
+            raise Exception("var cannot be None or empty")
+        if pin <= 0 or pin > 40:
+            raise Exception("pin must be between 1 and 40, inclusive")
+        self._pinout[var] = pin
 
     def remove_pinout(self, var):
         """Removes the pin mapping associated with the provided var
 
         Args:
             var (str): name of the pin mapping to be removed
+
+        Raises:
+            Exception if the provided var name is None or empty
         """
+        if var is None or var == "":
+            raise Exception("var cannot be None or empty")
         self._pinout.pop(var, None)
 
     def get_pin(self, var):
@@ -63,13 +74,29 @@ class SensorProcessor(ABC):
             var (str): name of the variable
 
         Raises:
-            Exception, if the provided var is None or not in the
+            Exception, if the provided var is None or not in the pinout
         """
-        if var is None or var not in self._pinout.keys():
+        if var is None or var == "" or var not in self._pinout.keys():
             raise Exception("Unknown var")
         return self._pinout[var]
 
     def has_pin_out(self, var, pin):
+        """Tests whether a the pinout provided (var, pin) is associated with this sensor processor
+
+        Args:
+            var (str): the name of the pin
+            pin (int): the pin number
+
+        Return:
+            True if the pinout (var, pin) is associated with this processor, False otherwise.
+
+        Raises:
+             Exception if the var is None or empty or if the pin is None, less than 1 or greater than 40.
+        """
+        if var is None or var == "":
+            raise Exception("var cannot be None or Empty")
+        if pin is None or pin < 1 or pin > 40:
+            raise Exception("pin cannot be None, < 1 or > 40")
         return var in self._pinout.keys() and self._pinout[var] == pin
 
     def _create_data_point(self, value, ts):
@@ -78,21 +105,28 @@ class SensorProcessor(ABC):
         Args:
             value (float): the measured value
             ts (int): the timestamp
+
+        Returns:
+            the newly created DataPoint
         """
         dp = DataPoint(value=value, timestamp=ts)
         db.session.add(dp)
         sensor = Sensor.query.filter_by(name=self._sensor_name).first()
         sensor.add_data_point(dp)
         db.session.commit()
+        return dp
 
     def process(self, ts):
         """Template method which collects data from the sensor and creates then creates the data point
 
         Args:
             ts (int): the timestamp at which this reading is associated with
+
+        Return:
+            The created data point
         """
-        value = self._read_sensor()
-        self._create_data_point(value, ts)
+        value = self._read_sensor(ts)
+        return self._create_data_point(value, ts)
 
     @abstractmethod
     def _read_sensor(self, ts):

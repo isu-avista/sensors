@@ -26,4 +26,4 @@ class RandomProcessor(SensorProcessor):
         Returns:
             float: value of the simulated sensor
         """
-        return 20 * math.log(ts - self.__base_ts) + 71
+        return 20 * math.log(ts - self.__base_ts + 1) + 71

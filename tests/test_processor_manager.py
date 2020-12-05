@@ -36,15 +36,6 @@ class ProcessorManagerTest(BaseTest):
         self.fixture.join()
         self.assertEqual(ManagerState.IDLE, self.fixture.state)
 
-    def test_restart(self):
-        self.assertEqual(ManagerState.IDLE, self.fixture.state)
-        self.fixture.restart()
-        time.sleep(2)
-        self.assertEqual(ManagerState.EXECUTING, self.fixture.state)
-        self.fixture.stop()
-        self.fixture.join()
-        self.assertEqual(ManagerState.IDLE, self.fixture.state)
-
     def test_init(self):
         self.fixture.init()
         self.assertEqual(1, len(self.fixture.processors))

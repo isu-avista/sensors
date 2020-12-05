@@ -29,7 +29,7 @@ class SimulatedProcessor(SensorProcessor):
         self.__probs = counts_elements / self.__data.size
 
     def _read_sensor(self, ts):
-        """Implementation of read sensor which returns a simulated data point based on the underlying dirtribution
+        """Implementation of read sensor which returns a simulated data point based on the underlying distribution
 
         Args:
             ts (int): time stamp of the data to be collected

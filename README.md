@@ -24,7 +24,25 @@ pip3 install git+ssh://git@github.com/isu-avista/sensors.git
 
 ## Usage
 
-TBD...
+This project provides a framework for integrating IoT sensors into the overall ISU-Avista
+project. Furthermore, it provides the capability to dynamically load these sensors at runtime
+and via the database a means to persist which sensors were loaded in the first place. Each
+sensor is actually a SensorProcessor instance which pulls information from GPIO pins and converts
+this to a DataPoint instance at a provided timestamp.
+
+In order to make use of this framework, one must understand the 
+[Template Method Design Pattern](https://refactoring.guru/design-patterns/template-method). 
+This pattern is the basis of the SensorProcessor class. When adding new sensors to the device
+(which have not already had a processor created) we need only implement a processor for that
+sensor. To implement such a processor, an individual need only execute the following steps:
+ 
+1. Add a new class to the `avista_sensors.impl` package (i.e. "new_sensor.py" with class `NewSensor`)
+2. This `NewSensor` class will need to extend `SensorProcessor` from `avista_sensors.sensor_processor` module
+3. Implement the method `_read_sensor(self, ts)` which contains the logic to convert pin readings to
+   a specific data point and returns this converted value.
+   
+Examples (minus the reading of pins) can be found in the `SimulatedProcess` and `RandomProcessor` classes
+in the `avista_sensors.impl` package.
 
 ## Credits
 

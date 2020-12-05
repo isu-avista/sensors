@@ -49,7 +49,7 @@ def load_sensor_from_dict(dct):
         module: name of the module
         cls: name of the class in the module
         name: name of the sensor
-        pinout: list of dictionarys which are var, pin pairs
+        pinout: list of dictionaries which are var, pin pairs
 
     Args:
         dct (dict): dictionary containing the information necessary to load a sensor

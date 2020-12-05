@@ -25,9 +25,8 @@ class SimulatedProcessor(SensorProcessor):
             file (str): path to the file to read the data from
         """
         self.data = np.genfromtxt(file, delimiter=",")
-        diffs = np.ediff1d(self.data)
-        self.unique_elements, counts_elements = np.unique(diffs, return_counts=True)
-        self.probs = counts_elements // diffs.size
+        self.unique_elements, counts_elements = np.unique(self.data, return_counts=True)
+        self.probs = counts_elements / self.data.size
 
     def _read_sensor(self, ts):
         """Implementation of read sensor which returns a simulated data point based on the underlying dirtribution
@@ -38,4 +37,4 @@ class SimulatedProcessor(SensorProcessor):
         Returns:
             float: Simulated data
         """
-        return np.random.choice(self.unique_elements, 1, replace=False, p=self.probs)
+        return np.random.choice(self.unique_elements, 1, replace=False, p=self.probs)[0]

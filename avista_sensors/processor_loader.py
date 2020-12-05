@@ -15,7 +15,7 @@ def import_from(name):
     Raises:
         Exception: if the provided class name is None or empty
     """
-    if name is None or name is "":
+    if name is None or name == "":
         raise Exception("can not import nothing")
     components = name.split('.')
     mod = __import__(components[0])

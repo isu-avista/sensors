@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.1.2](https://github.com/isu-avista/sensors/releases/tag/v0.1.2) - 2020-12-05
+### Added
+
+### Changed
+- Minor change to SimulatedProcessor field names
+
+### Deleted
+
 ## [0.1.1](https://github.com/isu-avista/sensors/releases/tag/v0.1.1) - 2020-12-05
 ### Added
 - Tests for all classes to reach 100% coverage (excluding SensorProcessor which is at 97%)

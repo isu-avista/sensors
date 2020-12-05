@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="avista-sensors",
-    version="0.1.1",
+    version="0.1.2",
     author="Isaac Griffith",
     author_email="grifisaa@isu.edu",
     description="",

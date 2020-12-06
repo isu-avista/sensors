@@ -23,7 +23,7 @@ class ManagerState(Enum):
         """Provides an instance of the Role for the given string.
 
         Args:
-            label (str): String representation of ManagerState literal
+            **label (str)**: String representation of ManagerState literal
 
         Returns:
             ManagerState: literal of ManagerSTate

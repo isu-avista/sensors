@@ -8,8 +8,9 @@ class SensorProcessor(ABC):
     """Abstract base class for all sensor processors.
 
     Attributes:
-        _pinout (dict): mapping of variable names to pins on the IoT device
-        _sensor_name (str): name of the sensor to which this processor belongs
+        **_pinout (dict)**: mapping of variable names to pins on the IoT device
+
+        **_sensor_name (str)**: name of the sensor to which this processor belongs
     """
 
     def __init__(self):
@@ -21,7 +22,7 @@ class SensorProcessor(ABC):
         """Assigns the sensor name to which this processor belongs
 
         Args:
-            name (str): The new name of the sensor to which this processor belongs
+            **name (str)**: The new name of the sensor to which this processor belongs
 
         Raises:
             Exception if the provided name is None or the Empty String
@@ -42,8 +43,9 @@ class SensorProcessor(ABC):
         """Adds a pin and var mapping to this processor
 
         Args:
-            var (str): The string name of the pin
-            pin (int): The value of the pin
+            **var (str)**: The string name of the pin
+
+            **pin (int)**: The value of the pin
 
         Raises:
             Exception if the provided var name is None or empty or if the pin is less than 1 or greater than 40
@@ -58,7 +60,7 @@ class SensorProcessor(ABC):
         """Removes the pin mapping associated with the provided var
 
         Args:
-            var (str): name of the pin mapping to be removed
+            **var (str)**: name of the pin mapping to be removed
 
         Raises:
             Exception if the provided var name is None or empty
@@ -71,7 +73,7 @@ class SensorProcessor(ABC):
         """Returns the pin associated with the provided variable name
 
         Args:
-            var (str): name of the variable
+            **var (str)**: name of the variable
 
         Raises:
             Exception, if the provided var is None or not in the pinout
@@ -84,8 +86,9 @@ class SensorProcessor(ABC):
         """Tests whether a the pinout provided (var, pin) is associated with this sensor processor
 
         Args:
-            var (str): the name of the pin
-            pin (int): the pin number
+            **var (str)**: the name of the pin
+
+            **pin (int)**: the pin number
 
         Return:
             True if the pinout (var, pin) is associated with this processor, False otherwise.
@@ -103,8 +106,9 @@ class SensorProcessor(ABC):
         """Constructs a data point with the given value and timestamp and commit the changes to the database
 
         Args:
-            value (float): the measured value
-            ts (int): the timestamp
+            **value (float)**: the measured value
+
+            **ts (int)**: the timestamp
 
         Returns:
             the newly created DataPoint
@@ -120,7 +124,7 @@ class SensorProcessor(ABC):
         """Template method which collects data from the sensor and creates then creates the data point
 
         Args:
-            ts (int): the timestamp at which this reading is associated with
+            **ts (int)**: the timestamp at which this reading is associated with
 
         Return:
             The created data point
@@ -133,7 +137,7 @@ class SensorProcessor(ABC):
         """Abstract method in which the reading of data from a sensor should be executed
 
         Args:
-            ts (int): timestamp of the data to be collected
+            **ts (int)**: timestamp of the data to be collected
 
         Returns:
             float: value of the associated sensor

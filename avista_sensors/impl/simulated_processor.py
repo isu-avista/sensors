@@ -6,9 +6,11 @@ class SimulatedProcessor(SensorProcessor):
     """An example sensor processor which utilizes empirical data to simulate sensor readings
 
     Attributes:
-        __data (np.Array): A numpy array of the data read in from a file
-        __probs (list): list of probabilities associated with values
-        __unique_elements (list): the list of unique values in the data
+        **__data (np.Array)**: A numpy array of the data read in from a file
+
+        **__probs (list)**: list of probabilities associated with values
+
+        **__unique_elements (list)**: the list of unique values in the data
     """
 
     def __init__(self):
@@ -22,7 +24,7 @@ class SimulatedProcessor(SensorProcessor):
         """Constructs a new simulated processor based on the data from the provided file
 
         Args:
-            file (str): path to the file to read the data from
+            **file (str)**: path to the file to read the data from
         """
         self.__data = np.genfromtxt(file, delimiter=",")
         self.__unique_elements, counts_elements = np.unique(self.__data, return_counts=True)
@@ -32,7 +34,7 @@ class SimulatedProcessor(SensorProcessor):
         """Implementation of read sensor which returns a simulated data point based on the underlying distribution
 
         Args:
-            ts (int): time stamp of the data to be collected
+            **ts (int)**: time stamp of the data to be collected
 
         Returns:
             float: Simulated data

@@ -7,7 +7,7 @@ def import_from(name):
     """Imports a class from the given fully qualified class name
 
     Args:
-        name (str): fully qualified class name
+        **name (str)**: fully qualified class name
 
     Returns:
         class that was imported
@@ -28,8 +28,9 @@ def dynamic_import(module, class_name):
     """Allows for the dynamic import and instantiation of a given class
 
     Args:
-        module (str): The full name of the module holding the class
-        class_name (str): The name of the class to be instantiated
+        **module (str)**: The full name of the module holding the class
+
+        **class_name (str)**: The name of the class to be instantiated
 
     Returns:
         Instance of module.class_name if it specifies an actual class otherwise None
@@ -46,10 +47,13 @@ def load_sensor_from_dict(dct):
     """Loads a sensor from the information in the provided dict
 
     Required fields:
-        module: name of the module
-        cls: name of the class in the module
-        name: name of the sensor
-        pinout: list of dictionaries which are var, pin pairs
+        **module**: name of the module
+
+        **cls**: name of the class in the module
+
+        **name**: name of the sensor
+
+        **pinout**: list of dictionaries which are var, pin pairs
 
     Args:
         dct (dict): dictionary containing the information necessary to load a sensor
@@ -75,7 +79,7 @@ def load_from_config(path):
     """Loads required sensors from a configuration file
 
     Args:
-        path (str): the base path for the location of configuration files
+        **path (str)**: the base path for the location of configuration files
     """
     config_dir = Path(path)
     with open(config_dir / "sensors.yml") as f:
@@ -94,7 +98,7 @@ def load_from_json(data):
     """Loads a sensor from a JSON representation
 
     Args:
-        data (:obj: `JSON`): JSON specification of a sensor processor
+        **data (:obj: `JSON`)**: JSON specification of a sensor processor
     """
     if data is None:
         return None

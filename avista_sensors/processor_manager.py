@@ -15,20 +15,26 @@ class ProcessorManager(Thread):
     by the start() method.
 
     Attributes:
-        processors (list): sensor processors attached to this processor manager
-        periodicity (int): periodicity of recording sensor data in milliseconds
-        state (:obj: `ManagerState`): current state of the processor manager
-        config (dict): Configuration file
+        **processors (list)**: sensor processors attached to this processor manager
+
+        **periodicity (int)**: periodicity of recording sensor data in milliseconds
+
+        **state (:obj: `ManagerState`)**: current state of the processor manager
+
+        **config (dict)**: Configuration file
     """
 
     def __init__(self, app, config=None, *args, **kwargs):
         """Constructs a new ProcessorManager instance
 
         Args:
-            app (:obj: `Flask`): The Flask app to which this is associated
-            config (dict): the base configuration for the process manager
-            *args: variable args passed to super class
-            **kwargs: keyword args passed to super class
+            **app (:obj: `Flask`)**: The Flask app to which this is associated
+
+            **config (dict)**: the base configuration for the process manager
+
+            __*args__: variable args passed to super class
+
+            __**kwargs__: keyword args passed to super class
         """
         super(ProcessorManager, self).__init__(*args, **kwargs)
         self.processors = []

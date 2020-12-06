@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.processor_loader &#8212; Avista-Sensors 0.1.0 documentation</title>
+    <title>avista_sensors.processor_loader &#8212; Avista-Sensors 0.1.4 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.processor_loader</a></li> 
       </ul>
@@ -48,7 +48,7 @@
     <span class="sd">&quot;&quot;&quot;Imports a class from the given fully qualified class name</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        name (str): fully qualified class name</span>
+<span class="sd">        **name (str)**: fully qualified class name</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        class that was imported</span>
@@ -56,7 +56,7 @@
 <span class="sd">    Raises:</span>
 <span class="sd">        Exception: if the provided class name is None or empty</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="ow">is</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;can not import nothing&quot;</span><span class="p">)</span>
     <span class="n">components</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
     <span class="n">mod</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -69,8 +69,9 @@
     <span class="sd">&quot;&quot;&quot;Allows for the dynamic import and instantiation of a given class</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        module (str): The full name of the module holding the class</span>
-<span class="sd">        class_name (str): The name of the class to be instantiated</span>
+<span class="sd">        **module (str)**: The full name of the module holding the class</span>
+
+<span class="sd">        **class_name (str)**: The name of the class to be instantiated</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Instance of module.class_name if it specifies an actual class otherwise None</span>
@@ -87,10 +88,13 @@
     <span class="sd">&quot;&quot;&quot;Loads a sensor from the information in the provided dict</span>
 
 <span class="sd">    Required fields:</span>
-<span class="sd">        module: name of the module</span>
-<span class="sd">        cls: name of the class in the module</span>
-<span class="sd">        name: name of the sensor</span>
-<span class="sd">        pinout: list of dictionarys which are var, pin pairs</span>
+<span class="sd">        **module**: name of the module</span>
+
+<span class="sd">        **cls**: name of the class in the module</span>
+
+<span class="sd">        **name**: name of the sensor</span>
+
+<span class="sd">        **pinout**: list of dictionaries which are var, pin pairs</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        dct (dict): dictionary containing the information necessary to load a sensor</span>
@@ -116,7 +120,7 @@
     <span class="sd">&quot;&quot;&quot;Loads required sensors from a configuration file</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        path (str): the base path for the location of configuration files</span>
+<span class="sd">        **path (str)**: the base path for the location of configuration files</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">config_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_dir</span> <span class="o">/</span> <span class="s2">&quot;sensors.yml&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -135,7 +139,7 @@
     <span class="sd">&quot;&quot;&quot;Loads a sensor from a JSON representation</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        data (:obj: `JSON`): JSON specification of a sensor processor</span>
+<span class="sd">        **data (:obj: `JSON`)**: JSON specification of a sensor processor</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
@@ -172,7 +176,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.processor_loader</a></li> 
       </ul>

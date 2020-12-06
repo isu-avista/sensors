@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>avista_sensors.processor_loader &#8212; Avista-Sensors 0.1.4 documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">avista_sensors.processor_loader</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for avista_sensors.processor_loader</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<div class="viewcode-block" id="import_from"><a class="viewcode-back" href="../../index.html#avista_sensors.processor_loader.import_from">[docs]</a><span class="k">def</span> <span class="nf">import_from</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Imports a class from the given fully qualified class name</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **name (str)**: fully qualified class name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        class that was imported</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: if the provided class name is None or empty</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;can not import nothing&quot;</span><span class="p">)</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mod</span></div>
+
+
+<div class="viewcode-block" id="dynamic_import"><a class="viewcode-back" href="../../index.html#avista_sensors.processor_loader.dynamic_import">[docs]</a><span class="k">def</span> <span class="nf">dynamic_import</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Allows for the dynamic import and instantiation of a given class</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **module (str)**: The full name of the module holding the class</span>
+
+<span class="sd">        **class_name (str)**: The name of the class to be instantiated</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Instance of module.class_name if it specifies an actual class otherwise None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">module</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">module</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">class_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">module</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">klass</span> <span class="o">=</span> <span class="n">import_from</span><span class="p">(</span><span class="n">module</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">class_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">klass</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="load_sensor_from_dict"><a class="viewcode-back" href="../../index.html#avista_sensors.processor_loader.load_sensor_from_dict">[docs]</a><span class="k">def</span> <span class="nf">load_sensor_from_dict</span><span class="p">(</span><span class="n">dct</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a sensor from the information in the provided dict</span>
+
+<span class="sd">    Required fields:</span>
+<span class="sd">        **module**: name of the module</span>
+
+<span class="sd">        **cls**: name of the class in the module</span>
+
+<span class="sd">        **name**: name of the sensor</span>
+
+<span class="sd">        **pinout**: list of dictionaries which are var, pin pairs</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dct (dict): dictionary containing the information necessary to load a sensor</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None if the module or class information is missing, otherwise an instance of the sensor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;module&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;module&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> \
+            <span class="s2">&quot;cls&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;cls&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">sensor</span> <span class="o">=</span> <span class="n">dynamic_import</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s2">&quot;module&quot;</span><span class="p">],</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;cls&quot;</span><span class="p">])</span>
+    <span class="n">sensor</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;pinout&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pinout</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;pinout&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">po</span> <span class="ow">in</span> <span class="n">pinout</span><span class="p">:</span>
+            <span class="n">var</span> <span class="o">=</span> <span class="n">po</span><span class="p">[</span><span class="s2">&quot;var&quot;</span><span class="p">]</span>
+            <span class="n">pin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">po</span><span class="p">[</span><span class="s2">&quot;pin&quot;</span><span class="p">])</span>
+            <span class="n">sensor</span><span class="o">.</span><span class="n">add_pinout</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sensor</span></div>
+
+
+<div class="viewcode-block" id="load_from_config"><a class="viewcode-back" href="../../index.html#avista_sensors.processor_loader.load_from_config">[docs]</a><span class="k">def</span> <span class="nf">load_from_config</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads required sensors from a configuration file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **path (str)**: the base path for the location of configuration files</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_dir</span> <span class="o">/</span> <span class="s2">&quot;sensors.yml&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+    <span class="n">sensors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;sensors&#39;</span><span class="p">]:</span>
+        <span class="n">sensor</span> <span class="o">=</span> <span class="n">load_sensor_from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sensor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sensors</span></div>
+
+
+<div class="viewcode-block" id="load_from_json"><a class="viewcode-back" href="../../index.html#avista_sensors.processor_loader.load_from_json">[docs]</a><span class="k">def</span> <span class="nf">load_from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a sensor from a JSON representation</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **data (:obj: `JSON`)**: JSON specification of a sensor processor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">dct</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">load_sensor_from_dict</span><span class="p">(</span><span class="n">dct</span><span class="p">)</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">avista_sensors.processor_loader</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Isaac Griffith.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
+    </div>
+  </body>
+</html>

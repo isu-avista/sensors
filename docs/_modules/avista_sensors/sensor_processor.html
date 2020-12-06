@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.sensor_processor &#8212; Avista-Sensors 0.1.3 documentation</title>
+    <title>avista_sensors.sensor_processor &#8212; Avista-Sensors 0.1.4 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_processor</a></li> 
       </ul>
@@ -49,8 +49,9 @@
     <span class="sd">&quot;&quot;&quot;Abstract base class for all sensor processors.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        _pinout (dict): mapping of variable names to pins on the IoT device</span>
-<span class="sd">        _sensor_name (str): name of the sensor to which this processor belongs</span>
+<span class="sd">        **_pinout (dict)**: mapping of variable names to pins on the IoT device</span>
+
+<span class="sd">        **_sensor_name (str)**: name of the sensor to which this processor belongs</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -62,7 +63,7 @@
         <span class="sd">&quot;&quot;&quot;Assigns the sensor name to which this processor belongs</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            name (str): The new name of the sensor to which this processor belongs</span>
+<span class="sd">            **name (str)**: The new name of the sensor to which this processor belongs</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            Exception if the provided name is None or the Empty String</span>
@@ -83,8 +84,9 @@
         <span class="sd">&quot;&quot;&quot;Adds a pin and var mapping to this processor</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            var (str): The string name of the pin</span>
-<span class="sd">            pin (int): The value of the pin</span>
+<span class="sd">            **var (str)**: The string name of the pin</span>
+
+<span class="sd">            **pin (int)**: The value of the pin</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            Exception if the provided var name is None or empty or if the pin is less than 1 or greater than 40</span>
@@ -99,7 +101,7 @@
         <span class="sd">&quot;&quot;&quot;Removes the pin mapping associated with the provided var</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            var (str): name of the pin mapping to be removed</span>
+<span class="sd">            **var (str)**: name of the pin mapping to be removed</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            Exception if the provided var name is None or empty</span>
@@ -112,7 +114,7 @@
         <span class="sd">&quot;&quot;&quot;Returns the pin associated with the provided variable name</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            var (str): name of the variable</span>
+<span class="sd">            **var (str)**: name of the variable</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            Exception, if the provided var is None or not in the pinout</span>
@@ -125,8 +127,9 @@
         <span class="sd">&quot;&quot;&quot;Tests whether a the pinout provided (var, pin) is associated with this sensor processor</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            var (str): the name of the pin</span>
-<span class="sd">            pin (int): the pin number</span>
+<span class="sd">            **var (str)**: the name of the pin</span>
+
+<span class="sd">            **pin (int)**: the pin number</span>
 
 <span class="sd">        Return:</span>
 <span class="sd">            True if the pinout (var, pin) is associated with this processor, False otherwise.</span>
@@ -144,8 +147,9 @@
         <span class="sd">&quot;&quot;&quot;Constructs a data point with the given value and timestamp and commit the changes to the database</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            value (float): the measured value</span>
-<span class="sd">            ts (int): the timestamp</span>
+<span class="sd">            **value (float)**: the measured value</span>
+
+<span class="sd">            **ts (int)**: the timestamp</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            the newly created DataPoint</span>
@@ -161,7 +165,7 @@
         <span class="sd">&quot;&quot;&quot;Template method which collects data from the sensor and creates then creates the data point</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            ts (int): the timestamp at which this reading is associated with</span>
+<span class="sd">            **ts (int)**: the timestamp at which this reading is associated with</span>
 
 <span class="sd">        Return:</span>
 <span class="sd">            The created data point</span>
@@ -174,7 +178,7 @@
         <span class="sd">&quot;&quot;&quot;Abstract method in which the reading of data from a sensor should be executed</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            ts (int): timestamp of the data to be collected</span>
+<span class="sd">            **ts (int)**: timestamp of the data to be collected</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: value of the associated sensor</span>
@@ -211,7 +215,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_processor</a></li> 
       </ul>

@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.1.5](https://github.com/isu-avista/sensors/releases/tag/v0.1.5) - 2020-12-13
+### Added
+
+### Changed
+- Modified tests to use current version of data
+- Modified processor_manager to be more integrated with flask
+
+### Deleted
+
 ## [0.1.4](https://github.com/isu-avista/sensors/releases/tag/v0.1.4) - 2020-12-05
 ### Added
 

@@ -58,7 +58,6 @@ class ProcessorManager(Thread):
     def stop(self):
         """Stops the processor manager by setting the _kill event"""
         self.state = ManagerState.STOPPING
-        print("STOPPING")
 
         logging.info("Processor Manager Stopping")
 
@@ -97,7 +96,6 @@ class ProcessorManager(Thread):
             with self.app.app_context():
                 if self.stopped():
                     return
-                print(self.state)
                 for p in self.processors:
                     p.process(int(datetime.timestamp(datetime.now())))
                 time.sleep(self.periodicity)

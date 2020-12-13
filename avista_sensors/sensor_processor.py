@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from avista_data.data_point import DataPoint
-from avista_data import db
+from avista_data.data_manager import get_db
 from avista_data.sensor import Sensor
 
 
@@ -113,6 +113,7 @@ class SensorProcessor(ABC):
         Returns:
             the newly created DataPoint
         """
+        db = get_db()
         dp = DataPoint(value=value, timestamp=ts)
         db.session.add(dp)
         sensor = Sensor.query.filter_by(name=self._sensor_name).first()

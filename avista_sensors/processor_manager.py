@@ -97,5 +97,6 @@ class ProcessorManager(Thread):
                 if self.stopped():
                     return
                 for p in self.processors:
-                    p.process(int(datetime.timestamp(datetime.now())))
+                    if p is not None:
+                        p.process(int(datetime.timestamp(datetime.now())))
                 time.sleep(self.periodicity)

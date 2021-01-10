@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.1.6](https://github.com/isu-avista/sensors/releases/tag/v0.1.6) - 2021-01-10
+### Added
+
+### Changed
+- Added a check to make sure sensor processors are not None in ProcessorManager._execute()
+
+### Deleted
+
 ## [0.1.5](https://github.com/isu-avista/sensors/releases/tag/v0.1.5) - 2020-12-13
 ### Added
 

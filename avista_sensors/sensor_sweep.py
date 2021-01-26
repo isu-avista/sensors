@@ -8,7 +8,7 @@ import threading
 from datetime import datetime
 
 
-class ProcessorManager(Thread):
+class SensorSweep(Thread):
     """Manages the data collection from sensor processors
 
     After constructing a ProcessorManager, you should call the init() method followed
@@ -36,7 +36,7 @@ class ProcessorManager(Thread):
 
             __**kwargs__: keyword args passed to super class
         """
-        super(ProcessorManager, self).__init__(*args, **kwargs)
+        super(SensorSweep, self).__init__(*args, **kwargs)
         self.processors = []
         self.periodicity = 1
         self.state = ManagerState.IDLE

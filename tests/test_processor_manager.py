@@ -1,6 +1,6 @@
 import unittest
 from tests.base_test import BaseTest
-from avista_sensors.processor_manager import ProcessorManager
+from avista_sensors.sensor_sweep import SensorSweep
 from avista_sensors.manager_state import ManagerState
 from avista_data.sensor import Sensor
 from avista_data import db
@@ -16,7 +16,7 @@ class ProcessorManagerTest(BaseTest):
                        cls="RandomProcessor", unit=Unit.F)
         db.session.add(sensor)
         db.session.commit()
-        self.fixture = ProcessorManager(self.app)
+        self.fixture = SensorSweep(self.app)
 
     def test_start(self):
         self.fixture.init()

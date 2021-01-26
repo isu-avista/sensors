@@ -2,5 +2,5 @@
 import avista_sensors.impl
 import avista_sensors.manager_state
 import avista_sensors.processor_loader
-import avista_sensors.processor_manager
+import avista_sensors.sensor_sweep
 import avista_sensors.sensor_processor

@@ -11,7 +11,7 @@ from datetime import datetime
 class SensorSweep(Thread):
     """Manages the data collection from sensor processors
 
-    After constructing a ProcessorManager, you should call the init() method followed
+    After constructing a SensorSweep, you should call the init() method followed
     by the start() method.
 
     Attributes:
@@ -25,7 +25,7 @@ class SensorSweep(Thread):
     """
 
     def __init__(self, app, config=None, *args, **kwargs):
-        """Constructs a new ProcessorManager instance
+        """Constructs a new SensorSweep instance
 
         Args:
             **app (:obj: `Flask`)**: The Flask app to which this is associated
@@ -50,22 +50,22 @@ class SensorSweep(Thread):
         self._execute()
 
     def _begin(self):
-        """Starts the processor manager"""
+        """Starts the sensor sweep"""
         self.state = ManagerState.STARTING
 
-        logging.info("Processor Manager Starting")
+        logging.info("Sensor Sweep Starting")
 
     def stop(self):
-        """Stops the processor manager by setting the _kill event"""
+        """Stops the sensor sweep by setting the _kill event"""
         self.state = ManagerState.STOPPING
 
-        logging.info("Processor Manager Stopping")
+        logging.info("Sensor Sweep Stopping")
 
         self.state = ManagerState.IDLE
         self._kill.set()
 
     def stopped(self):
-        """Determines if the processor manager is stopped
+        """Determines if the sensor sweep is stopped
 
         Returns:
             True if the _kill event has been set, False otherwise
@@ -75,22 +75,22 @@ class SensorSweep(Thread):
     def init(self):
         """Initializes the processors using a processor loader"""
         self.state = ManagerState.INITIALIZING
-        logging.info("Processor Manager Initializing")
+        logging.info("Sensor Sweep Initializing")
 
         for sensor in Sensor.query.all():
             self.processors.append(pl.load_sensor_from_dict(sensor.to_dict()))
 
-        logging.info("Processor Manager Initialized")
+        logging.info("Sensor Sweep Initialized")
 
     def _execute(self):
-        """Contains the main logic for the processor manager
+        """Contains the main logic for the sensor sweep
 
         Here each attached sensor is polled, the process sleeps for the specified periodicity then continues.
-        This process goes on until the processor manager is stopped.
+        This process goes on until the sensor sweep is stopped.
         """
         self.state = ManagerState.EXECUTING
 
-        logging.info("Processor Manager Running")
+        logging.info("Sensor Sweep Running")
 
         while True:
             with self.app.app_context():

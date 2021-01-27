@@ -31,7 +31,7 @@ class IRBeamProcessor(SensorProcessor):
     def set_end(self):
         self._end = time.time()
 
-    def callback(self, channel):
+    def callback(self):
         if not self._count:
             self.set_start()
             self._count += 1

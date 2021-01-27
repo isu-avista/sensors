@@ -1,18 +1,19 @@
 import time
 import logging
-from avista_sensors.manager_state import ManagerState
-import avista_sensors.processor_loader as pl
-from avista_data.sensor import Sensor
 from threading import Thread
 import threading
 from datetime import datetime
+from avista_sensors.manager_state import ManagerState
+import avista_sensors.processor_loader as pl
+from avista_data.sensor import Sensor
+import RPi.GPIO as GPIO
 
 
 class SensorSweep(Thread):
     """Manages the data collection from sensor processors
 
     After constructing a SensorSweep, you should call the init() method followed
-    by the start() method.
+    by the run() method.
 
     Attributes:
         **processors (list)**: sensor processors attached to this processor manager
@@ -61,6 +62,8 @@ class SensorSweep(Thread):
 
         logging.info("Sensor Sweep Stopping")
 
+        GPIO.cleanup()
+
         self.state = ManagerState.IDLE
         self._kill.set()
 
@@ -76,6 +79,8 @@ class SensorSweep(Thread):
         """Initializes the processors using a processor loader"""
         self.state = ManagerState.INITIALIZING
         logging.info("Sensor Sweep Initializing")
+
+        GPIO.setmode(GPIO.BCM)
 
         for sensor in Sensor.query.all():
             self.processors.append(pl.load_sensor_from_dict(sensor.to_dict()))

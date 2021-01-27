@@ -18,12 +18,8 @@ class IRBeamProcessor(SensorProcessor):
         self._setup()
 
     def _setup(self):
-        GPIO.add_event_detect(self.channel, GPIO.RISING, callback=self.callback)
-
-        while not self._finished:
-            time.sleep(0.1)
-        GPIO.remove_event_detect(self.channel)
-        return self._rpm
+        GPIO.setup(self.channel, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        self._finished = False
 
     def set_start(self):
         self._start = time.time()
@@ -47,4 +43,11 @@ class IRBeamProcessor(SensorProcessor):
             self._finished = True
 
     def _read_sensor(self, ts):
-        pass
+        GPIO.add_event_detect(self.channel, GPIO.RISING, callback=self.callback)
+
+        while not self._finished:
+            time.sleep(0.1)
+
+        GPIO.remove_event_detect(self.channel)
+
+        return self._rpm

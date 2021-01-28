@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to Avista-Sensors’s documentation! &#8212; Avista-Sensors 0.1.6 documentation</title>
+    <title>Welcome to Avista-Sensors’s documentation! &#8212; Avista-Sensors 0.2.0 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.1.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.2.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to Avista-Sensors’s documentation!</a></li> 
       </ul>
     </div>  
@@ -42,28 +42,8 @@
 <div class="toctree-wrapper compound">
 </div>
 </div>
-<div class="section" id="module-avista_sensors.manager_state">
-<span id="avista-sensors-manager-state"></span><h1>avista-sensors manager_state<a class="headerlink" href="#module-avista_sensors.manager_state" title="Permalink to this headline">¶</a></h1>
-<dl class="py class">
-<dt id="avista_sensors.manager_state.ManagerState">
-<em class="property">class </em><code class="sig-prename descclassname">avista_sensors.manager_state.</code><code class="sig-name descname">ManagerState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/manager_state.html#ManagerState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.manager_state.ManagerState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enum representing the various states of the processor manager</p>
-<dl class="py method">
-<dt id="avista_sensors.manager_state.ManagerState.from_str">
-<em class="property">static </em><code class="sig-name descname">from_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/manager_state.html#ManagerState.from_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.manager_state.ManagerState.from_str" title="Permalink to this definition">¶</a></dt>
-<dd><p>Provides an instance of the Role for the given string.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p><strong>label (str)</strong>: String representation of ManagerState literal</p>
-</dd>
-<dt>Returns:</dt><dd><p>ManagerState: literal of ManagerSTate</p>
-</dd>
-<dt>Raises:</dt><dd><p>NotImplementedError: If value is not a defined enum literal of ManagerState</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="avista-sensors-manager-state">
+<h1>avista-sensors manager_state<a class="headerlink" href="#avista-sensors-manager-state" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="module-avista_sensors.processor_loader">
 <span id="avista-sensors-processor-loader"></span><h1>avista-sensors processor_loader<a class="headerlink" href="#module-avista_sensors.processor_loader" title="Permalink to this headline">¶</a></h1>
@@ -122,7 +102,7 @@
 <dt>Required fields:</dt><dd><p><strong>module</strong>: name of the module</p>
 <p><strong>cls</strong>: name of the class in the module</p>
 <p><strong>name</strong>: name of the sensor</p>
-<p><strong>pinout</strong>: list of dictionaries which are var, pin pairs</p>
+<p><strong>parameters</strong>: list of dictionaries which are key, value pairs</p>
 </dd>
 <dt>Args:</dt><dd><p>dct (dict): dictionary containing the information necessary to load a sensor</p>
 </dd>
@@ -139,19 +119,19 @@
 <em class="property">class </em><code class="sig-prename descclassname">avista_sensors.sensor_processor.</code><code class="sig-name descname">SensorProcessor</code><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract base class for all sensor processors.</p>
 <dl>
-<dt>Attributes:</dt><dd><p><strong>_pinout (dict)</strong>: mapping of variable names to pins on the IoT device</p>
+<dt>Attributes:</dt><dd><p><strong>_parameters (dict)</strong>: mapping of parameter keys and values for Processors</p>
 <p><strong>_sensor_name (str)</strong>: name of the sensor to which this processor belongs</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avista_sensors.sensor_processor.SensorProcessor.add_pinout">
-<code class="sig-name descname">add_pinout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">var</span></em>, <em class="sig-param"><span class="n">pin</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.add_pinout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.add_pinout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a pin and var mapping to this processor</p>
+<dt id="avista_sensors.sensor_processor.SensorProcessor.add_parameter">
+<code class="sig-name descname">add_parameter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.add_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.add_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a key/value parameter to the current sensor</p>
 <dl>
-<dt>Args:</dt><dd><p><strong>var (str)</strong>: The string name of the pin</p>
-<p><strong>pin (int)</strong>: The value of the pin</p>
+<dt>Args:</dt><dd><p><strong>key (str)</strong>: The key of the parameter to be added</p>
+<p><strong>value (str)</strong>: The value of the parameter to be added</p>
 </dd>
-<dt>Raises:</dt><dd><p>Exception if the provided var name is None or empty or if the pin is less than 1 or greater than 40</p>
+<dt>Raises:</dt><dd><p>Exception if the provided key or value are None or Empty</p>
 </dd>
 </dl>
 </dd></dl>
@@ -167,28 +147,28 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="avista_sensors.sensor_processor.SensorProcessor.get_pin">
-<code class="sig-name descname">get_pin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">var</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.get_pin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.get_pin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the pin associated with the provided variable name</p>
+<dt id="avista_sensors.sensor_processor.SensorProcessor.get_parameter_value">
+<code class="sig-name descname">get_parameter_value</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.get_parameter_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.get_parameter_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value associated with the key provided</p>
 <dl class="simple">
-<dt>Args:</dt><dd><p><strong>var (str)</strong>: name of the variable</p>
+<dt>Args:</dt><dd><p><strong>key (str)</strong>: The key to the desired value</p>
 </dd>
-<dt>Raises:</dt><dd><p>Exception, if the provided var is None or not in the pinout</p>
+<dt>Raises:</dt><dd><p>Exception, if the provided key is None or not in the parameters</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avista_sensors.sensor_processor.SensorProcessor.has_pin_out">
-<code class="sig-name descname">has_pin_out</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">var</span></em>, <em class="sig-param"><span class="n">pin</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.has_pin_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.has_pin_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tests whether a the pinout provided (var, pin) is associated with this sensor processor</p>
+<dt id="avista_sensors.sensor_processor.SensorProcessor.has_parameter">
+<code class="sig-name descname">has_parameter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.has_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.has_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the parameter provided (key, value) is associated with this sensor processor</p>
 <dl>
-<dt>Args:</dt><dd><p><strong>var (str)</strong>: the name of the pin</p>
-<p><strong>pin (int)</strong>: the pin number</p>
+<dt>Args:</dt><dd><p><strong>key (str)</strong>: The parameter key</p>
+<p><strong>value (str)</strong>: The parameter value</p>
 </dd>
-<dt>Return:</dt><dd><p>True if the pinout (var, pin) is associated with this processor, False otherwise.</p>
+<dt>Return:</dt><dd><p>True if the parameter (key, value) is associated with this processor, False otherwise.</p>
 </dd>
-<dt>Raises:</dt><dd><p>Exception if the var is None or empty or if the pin is None, less than 1 or greater than 40.</p>
+<dt>Raises:</dt><dd><p>Exception if the key or value are None or empty</p>
 </dd>
 </dl>
 </dd></dl>
@@ -206,13 +186,13 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="avista_sensors.sensor_processor.SensorProcessor.remove_pinout">
-<code class="sig-name descname">remove_pinout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">var</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.remove_pinout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.remove_pinout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes the pin mapping associated with the provided var</p>
+<dt id="avista_sensors.sensor_processor.SensorProcessor.remove_parameter">
+<code class="sig-name descname">remove_parameter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/sensor_processor.html#SensorProcessor.remove_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.sensor_processor.SensorProcessor.remove_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the parameter with the matching key</p>
 <dl class="simple">
-<dt>Args:</dt><dd><p><strong>var (str)</strong>: name of the pin mapping to be removed</p>
+<dt>Args:</dt><dd><p><strong>key (str)</strong>: The key of the parameter to be removed</p>
 </dd>
-<dt>Raises:</dt><dd><p>Exception if the provided var name is None or empty</p>
+<dt>Raises:</dt><dd><p>Exception if the provided key name is None or empty</p>
 </dd>
 </dl>
 </dd></dl>
@@ -280,7 +260,7 @@
   <h3><a href="#">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome to Avista-Sensors’s documentation!</a></li>
-<li><a class="reference internal" href="#module-avista_sensors.manager_state">avista-sensors manager_state</a></li>
+<li><a class="reference internal" href="#avista-sensors-manager-state">avista-sensors manager_state</a></li>
 <li><a class="reference internal" href="#module-avista_sensors.processor_loader">avista-sensors processor_loader</a></li>
 <li><a class="reference internal" href="#module-avista_sensors.sensor_processor">avista-sensors sensor_processor</a></li>
 <li><a class="reference internal" href="#module-avista_sensors.impl.random_processor">avista-sensors.impl random_processor</a></li>
@@ -318,7 +298,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.1.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.2.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to Avista-Sensors’s documentation!</a></li> 
       </ul>
     </div>

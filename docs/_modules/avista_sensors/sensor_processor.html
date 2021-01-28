@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.sensor_processor &#8212; Avista-Sensors 0.1.6 documentation</title>
+    <title>avista_sensors.sensor_processor &#8212; Avista-Sensors 0.2.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_processor</a></li> 
       </ul>
@@ -49,14 +49,14 @@
     <span class="sd">&quot;&quot;&quot;Abstract base class for all sensor processors.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        **_pinout (dict)**: mapping of variable names to pins on the IoT device</span>
+<span class="sd">        **_parameters (dict)**: mapping of parameter keys and values for Processors</span>
 
 <span class="sd">        **_sensor_name (str)**: name of the sensor to which this processor belongs</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructs a new sensor processor&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
 <div class="viewcode-block" id="SensorProcessor.set_name"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.set_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
@@ -80,68 +80,72 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span></div>
 
-<div class="viewcode-block" id="SensorProcessor.add_pinout"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.add_pinout">[docs]</a>    <span class="k">def</span> <span class="nf">add_pinout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds a pin and var mapping to this processor</span>
+<div class="viewcode-block" id="SensorProcessor.add_parameter"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.add_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">add_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a key/value parameter to the current sensor</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **var (str)**: The string name of the pin</span>
+<span class="sd">            **key (str)**: The key of the parameter to be added</span>
 
-<span class="sd">            **pin (int)**: The value of the pin</span>
+<span class="sd">            **value (str)**: The value of the parameter to be added</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            Exception if the provided var name is None or empty or if the pin is less than 1 or greater than 40</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;var cannot be None or empty&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">pin</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">pin</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;pin must be between 1 and 40, inclusive&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">pin</span></div>
+<span class="sd">            Exception if the provided key or value are None or Empty</span>
 
-<div class="viewcode-block" id="SensorProcessor.remove_pinout"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.remove_pinout">[docs]</a>    <span class="k">def</span> <span class="nf">remove_pinout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Removes the pin mapping associated with the provided var</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;key cannot be None or empty&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;value cannot be None or empty&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="SensorProcessor.remove_parameter"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.remove_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">remove_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes the parameter with the matching key</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **var (str)**: name of the pin mapping to be removed</span>
+<span class="sd">            **key (str)**: The key of the parameter to be removed</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            Exception if the provided var name is None or empty</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;var cannot be None or empty&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+<span class="sd">            Exception if the provided key name is None or empty</span>
 
-<div class="viewcode-block" id="SensorProcessor.get_pin"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.get_pin">[docs]</a>    <span class="k">def</span> <span class="nf">get_pin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the pin associated with the provided variable name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;key cannot be None or empty&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SensorProcessor.get_parameter_value"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.get_parameter_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_parameter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the value associated with the key provided</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **var (str)**: name of the variable</span>
+<span class="sd">            **key (str)**: The key to the desired value</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            Exception, if the provided var is None or not in the pinout</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown var&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span></div>
+<span class="sd">            Exception, if the provided key is None or not in the parameters</span>
 
-<div class="viewcode-block" id="SensorProcessor.has_pin_out"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.has_pin_out">[docs]</a>    <span class="k">def</span> <span class="nf">has_pin_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Tests whether a the pinout provided (var, pin) is associated with this sensor processor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown key&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="SensorProcessor.has_parameter"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.has_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">has_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests whether the parameter provided (key, value) is associated with this sensor processor</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **var (str)**: the name of the pin</span>
+<span class="sd">            **key (str)**: The parameter key</span>
 
-<span class="sd">            **pin (int)**: the pin number</span>
+<span class="sd">            **value (str)**: The parameter value</span>
 
 <span class="sd">        Return:</span>
-<span class="sd">            True if the pinout (var, pin) is associated with this processor, False otherwise.</span>
+<span class="sd">            True if the parameter (key, value) is associated with this processor, False otherwise.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">             Exception if the var is None or empty or if the pin is None, less than 1 or greater than 40.</span>
+<span class="sd">             Exception if the key or value are None or empty</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;var cannot be None or Empty&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">pin</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">pin</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;pin cannot be None, &lt; 1 or &gt; 40&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinout</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">==</span> <span class="n">pin</span></div>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;key cannot be None or Empty&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;value cannot be None or Empty&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span></div>
 
     <span class="k">def</span> <span class="nf">_create_data_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructs a data point with the given value and timestamp and commit the changes to the database</span>
@@ -216,7 +220,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_processor</a></li> 
       </ul>

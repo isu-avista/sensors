@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.processor_loader &#8212; Avista-Sensors 0.1.6 documentation</title>
+    <title>avista_sensors.processor_loader &#8212; Avista-Sensors 0.2.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.processor_loader</a></li> 
       </ul>
@@ -94,25 +94,26 @@
 
 <span class="sd">        **name**: name of the sensor</span>
 
-<span class="sd">        **pinout**: list of dictionaries which are var, pin pairs</span>
+<span class="sd">        **parameters**: list of dictionaries which are key, value pairs</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        dct (dict): dictionary containing the information necessary to load a sensor</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        None if the module or class information is missing, otherwise an instance of the sensor</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="s2">&quot;module&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;module&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> \
             <span class="s2">&quot;cls&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;cls&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">sensor</span> <span class="o">=</span> <span class="n">dynamic_import</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s2">&quot;module&quot;</span><span class="p">],</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;cls&quot;</span><span class="p">])</span>
     <span class="n">sensor</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;pinout&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">pinout</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;pinout&quot;</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">po</span> <span class="ow">in</span> <span class="n">pinout</span><span class="p">:</span>
-            <span class="n">var</span> <span class="o">=</span> <span class="n">po</span><span class="p">[</span><span class="s2">&quot;var&quot;</span><span class="p">]</span>
-            <span class="n">pin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">po</span><span class="p">[</span><span class="s2">&quot;pin&quot;</span><span class="p">])</span>
-            <span class="n">sensor</span><span class="o">.</span><span class="n">add_pinout</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span>
+            <span class="n">sensor</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">sensor</span></div>
 
 
@@ -176,7 +177,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.1.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.processor_loader</a></li> 
       </ul>

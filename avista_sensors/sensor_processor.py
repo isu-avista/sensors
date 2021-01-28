@@ -8,14 +8,14 @@ class SensorProcessor(ABC):
     """Abstract base class for all sensor processors.
 
     Attributes:
-        **_pinout (dict)**: mapping of variable names to pins on the IoT device
+        **_parameters (dict)**: mapping of parameter keys and values for Processors
 
         **_sensor_name (str)**: name of the sensor to which this processor belongs
     """
 
     def __init__(self):
         """Constructs a new sensor processor"""
-        self._pinout = {}
+        self._parameters = {}
         self._sensor_name = ""
 
     def set_name(self, name):
@@ -39,68 +39,72 @@ class SensorProcessor(ABC):
         """
         return self._sensor_name
 
-    def add_pinout(self, var, pin):
-        """Adds a pin and var mapping to this processor
+    def add_parameter(self, key, value):
+        """Adds a key/value parameter to the current sensor
 
         Args:
-            **var (str)**: The string name of the pin
+            **key (str)**: The key of the parameter to be added
 
-            **pin (int)**: The value of the pin
+            **value (str)**: The value of the parameter to be added
 
         Raises:
-            Exception if the provided var name is None or empty or if the pin is less than 1 or greater than 40
-        """
-        if var is None or var == "":
-            raise Exception("var cannot be None or empty")
-        if pin <= 0 or pin > 40:
-            raise Exception("pin must be between 1 and 40, inclusive")
-        self._pinout[var] = pin
+            Exception if the provided key or value are None or Empty
 
-    def remove_pinout(self, var):
-        """Removes the pin mapping associated with the provided var
+        """
+        if key is None or key == "":
+            raise Exception("key cannot be None or empty")
+        if value is None or value == "":
+            raise Exception("value cannot be None or empty")
+        self._parameters[key] = value
+
+    def remove_parameter(self, key):
+        """Removes the parameter with the matching key
 
         Args:
-            **var (str)**: name of the pin mapping to be removed
+            **key (str)**: The key of the parameter to be removed
 
         Raises:
-            Exception if the provided var name is None or empty
-        """
-        if var is None or var == "":
-            raise Exception("var cannot be None or empty")
-        self._pinout.pop(var, None)
+            Exception if the provided key name is None or empty
 
-    def get_pin(self, var):
-        """Returns the pin associated with the provided variable name
+        """
+        if key is None or key == "":
+            raise Exception("key cannot be None or empty")
+        self._parameters.pop(key, None)
+
+    def get_parameter_value(self, key):
+        """Returns the value associated with the key provided
 
         Args:
-            **var (str)**: name of the variable
+            **key (str)**: The key to the desired value
 
         Raises:
-            Exception, if the provided var is None or not in the pinout
-        """
-        if var is None or var == "" or var not in self._pinout.keys():
-            raise Exception("Unknown var")
-        return self._pinout[var]
+            Exception, if the provided key is None or not in the parameters
 
-    def has_pin_out(self, var, pin):
-        """Tests whether a the pinout provided (var, pin) is associated with this sensor processor
+        """
+        if key is None or key == "" or key not in self._parameters.keys():
+            raise Exception("Unknown key")
+        return self._parameters[key]
+
+    def has_parameter(self, key, value):
+        """Tests whether the parameter provided (key, value) is associated with this sensor processor
 
         Args:
-            **var (str)**: the name of the pin
+            **key (str)**: The parameter key
 
-            **pin (int)**: the pin number
+            **value (str)**: The parameter value
 
         Return:
-            True if the pinout (var, pin) is associated with this processor, False otherwise.
+            True if the parameter (key, value) is associated with this processor, False otherwise.
 
         Raises:
-             Exception if the var is None or empty or if the pin is None, less than 1 or greater than 40.
+             Exception if the key or value are None or empty
+
         """
-        if var is None or var == "":
-            raise Exception("var cannot be None or Empty")
-        if pin is None or pin < 1 or pin > 40:
-            raise Exception("pin cannot be None, < 1 or > 40")
-        return var in self._pinout.keys() and self._pinout[var] == pin
+        if key is None or key == "":
+            raise Exception("key cannot be None or Empty")
+        if value is None or value == "":
+            raise Exception("value cannot be None or Empty")
+        return key in self._parameters.keys() and self._parameters[key] == value
 
     def _create_data_point(self, value, ts):
         """Constructs a data point with the given value and timestamp and commit the changes to the database

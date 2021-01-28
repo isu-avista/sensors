@@ -53,25 +53,26 @@ def load_sensor_from_dict(dct):
 
         **name**: name of the sensor
 
-        **pinout**: list of dictionaries which are var, pin pairs
+        **parameters**: list of dictionaries which are key, value pairs
 
     Args:
         dct (dict): dictionary containing the information necessary to load a sensor
 
     Returns:
         None if the module or class information is missing, otherwise an instance of the sensor
+
     """
     if "module" not in dct.keys() or dct["module"] == "" or \
             "cls" not in dct.keys() or dct["cls"] == "":
         return None
     sensor = dynamic_import(dct["module"], dct["cls"])
     sensor.set_name(dct["name"])
-    if dct["pinout"] is not None:
-        pinout = dct["pinout"]
-        for po in pinout:
-            var = po["var"]
-            pin = int(po["pin"])
-            sensor.add_pinout(var, pin)
+    if dct["parameters"] is not None:
+        params = dct["parameters"]
+        for p in params:
+            key = p["key"]
+            value = int(p["value"])
+            sensor.add_parameter(key, value)
     return sensor
 
 

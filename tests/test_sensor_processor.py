@@ -23,7 +23,7 @@ class SensorProcessorTest(BaseTest):
 
         self.fixture = RandomProcessor()
         self.fixture.set_name("Test")
-        self.fixture.add_pinout("test", 2)
+        self.fixture.add_parameter("TestKey", "TestValue")
 
     def test_name(self):
         self.fixture.set_name("Test2")
@@ -37,72 +37,68 @@ class SensorProcessorTest(BaseTest):
         with self.assertRaises(Exception):
             self.fixture.set_name("")
 
-    def test_add_pinout(self):
-        self.fixture.add_pinout("var", 1)
-        self.assertTrue(self.fixture.has_pin_out("var", 1))
+    def test_add_parameter(self):
+        self.fixture.add_parameter("TestKey2", "TestValue2")
+        self.assertTrue(self.fixture.has_parameter("TestKey2", "TestValue2"))
 
-    def test_add_pinout_none_var(self):
+    def test_add_parameter_none_key(self):
         with self.assertRaises(Exception):
-            self.fixture.add_pinout(None, 1)
+            self.fixture.add_parameter(None, "TestValue2")
 
-    def test_add_pinout_empty_var(self):
+    def test_add_parameter_empty_key(self):
         with self.assertRaises(Exception):
-            self.fixture.add_pinout("", 1)
+            self.fixture.add_parameter("", "TestValue2")
 
-    def test_add_pinout_pin_range(self):
+    def test_add_parameter_none_value(self):
         with self.assertRaises(Exception):
-            self.fixture.add_pinout("var", 0)
+            self.fixture.add_parameter("TestKey2", None)
 
-    def test_add_pinout_pin_range2(self):
+    def test_add_parameter_empty_value(self):
         with self.assertRaises(Exception):
-            self.fixture.add_pinout("var", 41)
+            self.fixture.add_parameter("TestKey2", "")
 
-    def test_remove_pinout(self):
-        self.fixture.remove_pinout("test")
-        self.assertFalse(self.fixture.has_pin_out("test", 2))
+    def test_remove_parameter(self):
+        self.fixture.remove_parameter("TestKey")
+        self.assertFalse(self.fixture.has_parameter("TestKey", "TestValue"))
 
-    def test_remove_pinout_none(self):
+    def test_remove_parameter_none(self):
         with self.assertRaises(Exception):
-            self.fixture.remove_pinout(None)
+            self.fixture.remove_parameter(None)
 
-    def test_remove_pinout_empty(self):
+    def test_remove_parameter_empty(self):
         with self.assertRaises(Exception):
-            self.fixture.remove_pinout("")
+            self.fixture.remove_parameter("")
 
-    def test_pin(self):
-        self.assertEqual(2, self.fixture.get_pin("test"))
+    def test_value(self):
+        self.assertEqual("TestValue", self.fixture.get_parameter_value("TestKey"))
 
-    def test_pin_none(self):
+    def test_parameter_none(self):
         with self.assertRaises(Exception):
-            self.fixture.get_pin(None)
+            self.fixture.get_parameter_value(None)
 
-    def test_pin_empty(self):
+    def test_parameter_empty(self):
         with self.assertRaises(Exception):
-            self.fixture.get_pin("")
+            self.fixture.get_parameter_value("")
 
-    def test_pin_unknown(self):
+    def test_parameter_unknown(self):
         with self.assertRaises(Exception):
-            self.fixture.get_pin("foo")
+            self.fixture.get_parameter_value("foo")
 
-    def test_has_pin_out(self):
-        self.assertTrue(self.fixture.has_pin_out("test", 2))
-        self.assertFalse(self.fixture.has_pin_out("test", 1))
+    def test_has_parameter(self):
+        self.assertTrue(self.fixture.has_parameter("TestKey", "TestValue"))
+        self.assertFalse(self.fixture.has_parameter("TestKey2", "TestValue2"))
 
-    def test_has_pin_out_none_pin(self):
+    def test_has_parameter_none_key(self):
         with self.assertRaises(Exception):
-            self.fixture.has_pin_out(None, 1)
+            self.fixture.has_parameter(None, "TestValue")
 
-    def test_has_pin_out_none_var(self):
+    def test_has_parameter_none_value(self):
         with self.assertRaises(Exception):
-            self.fixture.has_pin_out("test", None)
+            self.fixture.has_parameter("TestKey", None)
 
-    def test_has_pin_out_empty_var(self):
+    def test_has_parameter_empty_key(self):
         with self.assertRaises(Exception):
-            self.fixture.has_pin_out("", 1)
-
-    def test_has_pin_out_pin_range(self):
-        with self.assertRaises(Exception):
-            self.fixture.has_pin_out("test", 0)
+            self.fixture.has_parameter("", "TestValue")
 
     def test_process(self):
         ts = int(datetime.timestamp(datetime.now()))

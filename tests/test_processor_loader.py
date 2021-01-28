@@ -49,9 +49,9 @@ class ProcessorLoaderTest(unittest.TestCase):
             'module': 'avista_sensors.impl.random_processor',
             'cls': 'RandomProcessor',
             'name': 'Test',
-            'pinout': [
-                {'var': 'x', 'pin': 1},
-                {'var': 'y', 'pin': 2}
+            'parameters': [
+                {'key': 'x', 'value': 1},
+                {'key': 'y', 'value': 2}
             ]
         }
         result = pl.load_from_json(json.dumps(dct))
@@ -82,24 +82,24 @@ class ProcessorLoaderTest(unittest.TestCase):
             'module': 'avista_sensors.impl.random_processor',
             'cls': 'RandomProcessor',
             'name': 'Test',
-            'pinout': [
-                {'var': 'x', 'pin': 1},
-                {'var': 'y', 'pin': 2}
+            'parameters': [
+                {'key': 'x', 'value': 1},
+                {'key': 'y', 'value': 2}
             ]
         }
         result = pl.load_sensor_from_dict(dct)
         self.assertTrue(isinstance(result, RandomProcessor), "not expected type")
         self.assertEqual("Test", result.get_name())
-        self.assertTrue(result.has_pin_out("x", 1))
-        self.assertTrue(result.has_pin_out("y", 2))
+        self.assertTrue(result.has_parameter("x", 1))
+        self.assertTrue(result.has_parameter("y", 2))
 
     def test_load_sensor_from_dict_no_module(self):
         dct = {
             'cls': 'RandomProcessor',
             'name': 'Test',
-            'pinout': [
-                {'var': 'x', 'pin': 1},
-                {'var': 'y', 'pin': 2}
+            'parameters': [
+                {'key': 'x', 'value': 1},
+                {'key': 'y', 'value': 2}
             ]
         }
         result = pl.load_sensor_from_dict(dct)
@@ -110,9 +110,9 @@ class ProcessorLoaderTest(unittest.TestCase):
             'module': '',
             'cls': 'RandomProcessor',
             'name': 'Test',
-            'pinout': [
-                {'var': 'x', 'pin': 1},
-                {'var': 'y', 'pin': 2}
+            'parameters': [
+                {'key': 'x', 'value': 1},
+                {'key': 'y', 'value': 2}
             ]
         }
         result = pl.load_sensor_from_dict(dct)
@@ -123,9 +123,9 @@ class ProcessorLoaderTest(unittest.TestCase):
             'module': 'avista_sensors.impl.random_processor',
             'cls': '',
             'name': 'Test',
-            'pinout': [
-                {'var': 'x', 'pin': 1},
-                {'var': 'y', 'pin': 2}
+            'parameters': [
+                {'key': 'x', 'value': 1},
+                {'key': 'y', 'value': 2}
             ]
         }
         result = pl.load_sensor_from_dict(dct)
@@ -135,9 +135,9 @@ class ProcessorLoaderTest(unittest.TestCase):
         dct = {
             'module': 'avista_sensors.impl.random_processor',
             'name': 'Test',
-            'pinout': [
-                {'var': 'x', 'pin': 1},
-                {'var': 'y', 'pin': 2}
+            'parameters': [
+                {'key': 'x', 'value': 1},
+                {'key': 'y', 'value': 2}
             ]
         }
         result = pl.load_sensor_from_dict(dct)

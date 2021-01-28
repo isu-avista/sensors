@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.2.0](https://github.com/isu-avista/sensors/releases/tag/v0.2.0) - 2021-01-27
+### Added
+* DHTProcessor class to read from dht22 temperature sensor
+* IRTempProcessor class to read from mlx90614 ir temperature sensor
+* SoundProcessor class to read from electret 4466 microphone
+* VibrationProcessor class to read from mpu6050 accelerometer
+* IRBeamProcessor class to read from ir break beam
+
+### Changed
+* Replaced uses of sensor pinouts with parameters
+
+### Deleted
+
 ## [0.1.6](https://github.com/isu-avista/sensors/releases/tag/v0.1.6) - 2021-01-10
 ### Added
 

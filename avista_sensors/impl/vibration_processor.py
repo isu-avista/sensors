@@ -14,7 +14,7 @@ class VibrationProcessor(SensorProcessor):
         self._time_step = 0.005
 
     def setup(self):
-        self._address = self._parameters['address']
+        self._address = int(self._parameters['address'])
         self._sensor = mpu6050(self._address)
 
     def _read_sensor(self, ts):

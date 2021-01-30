@@ -18,6 +18,12 @@ class SensorProcessor(ABC):
         self._parameters = {}
         self._sensor_name = ""
 
+    @abstractmethod
+    def setup(self):
+        """Abstract method for setting up parameters or sensor specific classes
+        """
+        pass
+
     def set_name(self, name):
         """Assigns the sensor name to which this processor belongs
 

@@ -7,6 +7,10 @@ class DHTSensor(SensorProcessor):
 
     def __init__(self):
         super().__init__()
+        self._channel = None
+        self._sensor = None
+
+    def setup(self):
         self._channel = self._parameters['channel']
         self._sensor = adafruit_dht.DHT22(board.D15)
 

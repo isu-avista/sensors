@@ -7,6 +7,12 @@ class IRTempProcessor(SensorProcessor):
 
     def __init__(self):
         super().__init__()
+        self._address = None
+        self._bus_id = None
+        self._bus = None
+        self._sensor = None
+
+    def setup(self):
         self._address = self._parameters['address']
         self._bus_id = self._parameters['bus_id']
         self._bus = SMBus(self._bus_id)

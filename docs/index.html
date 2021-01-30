@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to Avista-Sensors’s documentation! &#8212; Avista-Sensors 0.2.0 documentation</title>
+    <title>Welcome to Avista-Sensors’s documentation! &#8212; Avista-Sensors 0.2.1 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.2.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to Avista-Sensors’s documentation!</a></li> 
       </ul>
     </div>  
@@ -45,72 +45,8 @@
 <div class="section" id="avista-sensors-manager-state">
 <h1>avista-sensors manager_state<a class="headerlink" href="#avista-sensors-manager-state" title="Permalink to this headline">¶</a></h1>
 </div>
-<div class="section" id="module-avista_sensors.processor_loader">
-<span id="avista-sensors-processor-loader"></span><h1>avista-sensors processor_loader<a class="headerlink" href="#module-avista_sensors.processor_loader" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt id="avista_sensors.processor_loader.dynamic_import">
-<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">dynamic_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">class_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#dynamic_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.dynamic_import" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allows for the dynamic import and instantiation of a given class</p>
-<dl>
-<dt>Args:</dt><dd><p><strong>module (str)</strong>: The full name of the module holding the class</p>
-<p><strong>class_name (str)</strong>: The name of the class to be instantiated</p>
-</dd>
-<dt>Returns:</dt><dd><p>Instance of module.class_name if it specifies an actual class otherwise None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="avista_sensors.processor_loader.import_from">
-<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.import_from" title="Permalink to this definition">¶</a></dt>
-<dd><p>Imports a class from the given fully qualified class name</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p><strong>name (str)</strong>: fully qualified class name</p>
-</dd>
-<dt>Returns:</dt><dd><p>class that was imported</p>
-</dd>
-<dt>Raises:</dt><dd><p>Exception: if the provided class name is None or empty</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="avista_sensors.processor_loader.load_from_config">
-<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">load_from_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#load_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.load_from_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads required sensors from a configuration file</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p><strong>path (str)</strong>: the base path for the location of configuration files</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="avista_sensors.processor_loader.load_from_json">
-<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">load_from_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#load_from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.load_from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads a sensor from a JSON representation</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p><strong>data (:obj: `JSON`)</strong>: JSON specification of a sensor processor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="avista_sensors.processor_loader.load_sensor_from_dict">
-<code class="sig-prename descclassname">avista_sensors.processor_loader.</code><code class="sig-name descname">load_sensor_from_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dct</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/processor_loader.html#load_sensor_from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avista_sensors.processor_loader.load_sensor_from_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads a sensor from the information in the provided dict</p>
-<dl>
-<dt>Required fields:</dt><dd><p><strong>module</strong>: name of the module</p>
-<p><strong>cls</strong>: name of the class in the module</p>
-<p><strong>name</strong>: name of the sensor</p>
-<p><strong>parameters</strong>: list of dictionaries which are key, value pairs</p>
-</dd>
-<dt>Args:</dt><dd><p>dct (dict): dictionary containing the information necessary to load a sensor</p>
-</dd>
-<dt>Returns:</dt><dd><p>None if the module or class information is missing, otherwise an instance of the sensor</p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="section" id="avista-sensors-processor-loader">
+<h1>avista-sensors processor_loader<a class="headerlink" href="#avista-sensors-processor-loader" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="module-avista_sensors.sensor_processor">
 <span id="avista-sensors-sensor-processor"></span><h1>avista-sensors sensor_processor<a class="headerlink" href="#module-avista_sensors.sensor_processor" title="Permalink to this headline">¶</a></h1>
@@ -261,7 +197,7 @@
   <ul>
 <li><a class="reference internal" href="#">Welcome to Avista-Sensors’s documentation!</a></li>
 <li><a class="reference internal" href="#avista-sensors-manager-state">avista-sensors manager_state</a></li>
-<li><a class="reference internal" href="#module-avista_sensors.processor_loader">avista-sensors processor_loader</a></li>
+<li><a class="reference internal" href="#avista-sensors-processor-loader">avista-sensors processor_loader</a></li>
 <li><a class="reference internal" href="#module-avista_sensors.sensor_processor">avista-sensors sensor_processor</a></li>
 <li><a class="reference internal" href="#module-avista_sensors.impl.random_processor">avista-sensors.impl random_processor</a></li>
 <li><a class="reference internal" href="#module-avista_sensors.impl.simulated_processor">avista-sensors.impl simulated_processor</a></li>
@@ -298,7 +234,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.2.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to Avista-Sensors’s documentation!</a></li> 
       </ul>
     </div>

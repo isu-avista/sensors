@@ -9,9 +9,13 @@ class VibrationProcessor(SensorProcessor):
 
     def __init__(self):
         super().__init__()
+        self._address = None
+        self._sensor = None
+        self._time_step = 0.005
+
+    def setup(self):
         self._address = self._parameters['address']
         self._sensor = mpu6050(self._address)
-        self._time_step = 0.005
 
     def _read_sensor(self, ts):
         x = np.empty([400])

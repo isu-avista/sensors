@@ -71,8 +71,9 @@ def load_sensor_from_dict(dct):
         params = dct["parameters"]
         for p in params:
             key = p["key"]
-            value = int(p["value"])
+            value = p["value"]
             sensor.add_parameter(key, value)
+    sensor.setup()
     return sensor
 
 

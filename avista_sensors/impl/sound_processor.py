@@ -13,11 +13,11 @@ class SoundProcessor(SensorProcessor):
     def __init__(self):
         super().__init__()
         self.channel = None
-        self.pin = self._parameters['pin']
+        self.pin = None
         self.window = 50
-        self._setup()
 
-    def _setup(self):
+    def setup(self):
+        self.pin = self._parameters['pin']
         spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
         cs = digitalio.DigitalInOut(self.pin)
         mcp = MCP.MCP3008(spi, cs)
@@ -40,7 +40,7 @@ class SoundProcessor(SensorProcessor):
         # Next create a value peakToPeak (diff between min and max)
         peakToPeak = signalMax - signalMin
 
-        # Using this we can conver the peakToPeak to RMS voltage
+        # Using this we can convert the peakToPeak to RMS voltage
         volts = ((peakToPeak * 3.3) / 1024) * 0.707
         first = math.log10(volts / 0.00631) * 20
         second = first + 94 - 44 - 25

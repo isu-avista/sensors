@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.2.1](https://github.com/isu-avista/sensors/releases/tag/v0.2.1) - 2021-01-29
+### Added
+* Added new sensor implementations to avista_sensors.impl.__init\__.py
+
+### Changed
+
+### Deleted
+
 ## [0.2.0](https://github.com/isu-avista/sensors/releases/tag/v0.2.0) - 2021-01-27
 ### Added
 * DHTProcessor class to read from dht22 temperature sensor

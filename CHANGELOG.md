@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.3.0](https://github.com/isu-avista/sensors/releases/tag/v0.3.0) - 2021-01-29
+### Added
+* Added an abstract setup method to sensor_processor for inheriting processors to 
+  reference parameters after they've been added to their dictionaries
+
+### Changed
+
+### Deleted
+
 ## [0.2.1](https://github.com/isu-avista/sensors/releases/tag/v0.2.1) - 2021-01-29
 ### Added
 * Added new sensor implementations to avista_sensors.impl.__init\__.py

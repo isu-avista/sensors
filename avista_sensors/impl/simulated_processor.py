@@ -13,6 +13,9 @@ class SimulatedProcessor(SensorProcessor):
         **__unique_elements (list)**: the list of unique values in the data
     """
 
+    def setup(self):
+        pass
+
     def __init__(self):
         """Constructs a new simulated processor"""
         super(SimulatedProcessor, self).__init__()

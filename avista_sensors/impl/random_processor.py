@@ -12,6 +12,9 @@ class RandomProcessor(SensorProcessor):
         **__base_ts (int)**: the base time stamp used in the calculation
     """
 
+    def setup(self):
+        pass
+
     def __init__(self):
         """Constructs a new SimulatedProcessor with a base timestamp of now"""
         super(RandomProcessor, self).__init__()

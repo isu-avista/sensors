@@ -7,15 +7,17 @@ class DHTSensor(SensorProcessor):
 
     def __init__(self):
         super().__init__()
-        self._channel = None
         self._sensor = None
 
     def setup(self):
-        self._channel = self._parameters['channel']
         self._sensor = adafruit_dht.DHT22(board.D15)
 
     def _read_sensor(self, ts):
-        return {
+        data = {
             "temp": self._sensor.temperature,
             "humidity": self._sensor.humidity
         }
+
+        print(data)
+
+        return data

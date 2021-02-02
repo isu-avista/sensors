@@ -24,13 +24,15 @@ class VibrationProcessor(SensorProcessor):
 
         self._sample(x, y, z)
 
-        #data = {
-        #    "x": self._find_freq(x),
-        #    "y": self._find_freq(y),
-        #    "z": self._find_freq(z)
-        #}
-        #return data
-        return self._find_freq(x)
+        data = {
+            "x": self._find_freq(x),
+            "y": self._find_freq(y),
+            "z": self._find_freq(z)
+        }
+
+        print(data)
+
+        return data
 
     def _find_freq(self, data):
         # execute the fft

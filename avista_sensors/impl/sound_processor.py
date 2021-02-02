@@ -17,7 +17,7 @@ class SoundProcessor(SensorProcessor):
         self.window = 50
 
     def setup(self):
-        self.pin = self._parameters['pin']
+        self.pin = board.D22
         spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
         cs = digitalio.DigitalInOut(self.pin)
         mcp = MCP.MCP3008(spi, cs)
@@ -44,6 +44,8 @@ class SoundProcessor(SensorProcessor):
         volts = ((peakToPeak * 3.3) / 1024) * 0.707
         first = math.log10(volts / 0.00631) * 20
         second = first + 94 - 44 - 25
+
+        print(second)
 
         return second
 

@@ -17,9 +17,9 @@ class IRBeamProcessor(SensorProcessor):
         self._rpm = 0
 
     def setup(self):
-        self.channel = self._parameters['channel']
-        self.blades = self._parameters['blades']
-        self._sample = self._sample['sample']
+        self.channel = int(self._parameters['channel'])
+        self.blades = int(self._parameters['blades'])
+        self._sample = int(self._sample['sample'])
         GPIO.setup(self.channel, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     def set_start(self):
@@ -50,5 +50,7 @@ class IRBeamProcessor(SensorProcessor):
             time.sleep(0.1)
 
         GPIO.remove_event_detect(self.channel)
+
+        print(self._rpm)
 
         return self._rpm

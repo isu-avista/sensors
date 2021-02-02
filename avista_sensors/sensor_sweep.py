@@ -103,5 +103,6 @@ class SensorSweep(Thread):
                     return
                 for p in self.processors:
                     if p is not None:
+                        print("Processing")
                         p.process(int(datetime.timestamp(datetime.now())))
                 time.sleep(self.periodicity)

@@ -3,7 +3,7 @@ import board
 import adafruit_dht
 
 
-class DHTSensor(SensorProcessor):
+class DHTProcessor(SensorProcessor):
 
     def __init__(self):
         super().__init__()

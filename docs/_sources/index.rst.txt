@@ -35,6 +35,31 @@ avista-sensors.impl simulated_processor
 .. automodule:: avista_sensors.impl.simulated_processor
    :members:
 
+avista-sensors.impl dht_processor
+=================================
+.. automodule:: avista_sensors.impl.dht_processor
+   :members:
+
+avista-sensors.impl irbeam_processor
+====================================
+.. automodule:: avista_sensors.impl.irbeam_processor
+   :members:
+
+avista-sensors.impl irtemp_processor
+====================================
+.. automodule:: avista_sensors.impl.irtemp_processor
+   :members:
+
+avista-sensors.impl sound_processor
+===================================
+.. automodule:: avista_sensors.impl.sound_processor
+   :members:
+
+avista-sensors.impl vibration_processor
+=======================================
+.. automodule:: avista_sensors.impl.vibration_processor
+   :members:
+
 Indices and tables
 ==================
 

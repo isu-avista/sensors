@@ -13,6 +13,9 @@ class SimulatedProcessor(SensorProcessor):
         **__unique_elements (list)**: the list of unique values in the data
     """
 
+    def setup(self):
+        pass
+
     def __init__(self):
         """Constructs a new simulated processor"""
         super(SimulatedProcessor, self).__init__()
@@ -37,6 +40,11 @@ class SimulatedProcessor(SensorProcessor):
             **ts (int)**: time stamp of the data to be collected
 
         Returns:
-            float: Simulated data
+            dict: Simulated data
         """
-        return np.random.choice(self.__unique_elements, 1, replace=False, p=self.__probs)[0]
+
+        data = {
+            "simulated": np.random.choice(self.__unique_elements, 1, replace=False, p=self.__probs)[0]
+        }
+
+        return data

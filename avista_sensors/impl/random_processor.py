@@ -27,6 +27,11 @@ class RandomProcessor(SensorProcessor):
             **ts (int)**: timestamp of the data to be collected
 
         Returns:
-            float: value of the simulated sensor
+            dict: name and data value
         """
-        return 20 * math.log(ts - self.__base_ts + 1) + 71
+
+        data = {
+            "random": 20 * math.log(ts - self.__base_ts + 1) + 71
+        }
+
+        return data

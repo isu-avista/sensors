@@ -10,8 +10,8 @@ class RandomProcessorTest(unittest.TestCase):
 
     def test_read_sensor(self):
         result = self.fixture._read_sensor(int(datetime.timestamp(datetime.now())))
-        self.assertTrue(result > 0)
-        self.assertTrue(isinstance(result, float))
+        self.assertTrue(result['random'] > 0)
+        self.assertTrue(isinstance(result['random'], float))
 
     def test_read_sensor_none(self):
         with self.assertRaises(Exception):

@@ -9,14 +9,25 @@ from adafruit_mcp3xxx.analog_in import AnalogIn
 
 
 class SoundProcessor(SensorProcessor):
+    """Electret 4466 sensor implementation (Microphone)
+
+    Attributes:
+        **channel (:obj: `AnalogIn`)**: adc converter channel
+
+        **pin (:obj: `pin`)**: physical pin of the sensor
+
+        **window (int)**: window over which to sample data
+    """
 
     def __init__(self):
+        """Constructs a new SoundProcessor instance"""
         super().__init__()
         self.channel = None
         self.pin = None
         self.window = 50
 
     def setup(self):
+        """Sets up sensor configurations that should happen after loading from the database"""
         self.pin = board.D22
         spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
         cs = digitalio.DigitalInOut(self.pin)
@@ -25,6 +36,11 @@ class SoundProcessor(SensorProcessor):
         self.channel = AnalogIn(mcp, MCP.P0)
 
     def _read_sensor(self, ts):
+        """Reads data from the sensor
+
+        Args:
+            **ts (int)**: timestamp of when the data was read
+        """
         # Need to read for 50 ms to create a sample window
         # from this create two values:
         #    signalMax (the max during that window)
@@ -45,7 +61,9 @@ class SoundProcessor(SensorProcessor):
         first = math.log10(volts / 0.00631) * 20
         second = first + 94 - 44 - 25
 
-        print(second)
+        data = {
+            "volume": second
+        }
 
-        return second
+        return data
 

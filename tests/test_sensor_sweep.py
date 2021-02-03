@@ -8,12 +8,12 @@ from avista_data.unit import Unit
 import time
 
 
-class ProcessorManagerTest(BaseTest):
+class SensorSweepTest(BaseTest):
 
     def setUp(self):
         super().setUp()
         sensor = Sensor(name="Test", quantity="Quantity", module="avista_sensors.impl.random_processor",
-                       cls="RandomProcessor", unit=Unit.F)
+                        cls="RandomProcessor", unit=Unit.F)
         db.session.add(sensor)
         db.session.commit()
         self.fixture = SensorSweep(self.app)

@@ -103,9 +103,9 @@ class SensorProcessorTest(BaseTest):
     def test_process(self):
         ts = int(datetime.timestamp(datetime.now()))
         result = self.fixture.process(ts)
-        self.assertTrue(isinstance(result, DataPoint))
-        self.assertEqual(ts, result.get_timestamp())
-        self.assertTrue(result.get_value() > 0)
+        self.assertTrue(isinstance(result[0], DataPoint))
+        self.assertEqual(ts, result[0].get_timestamp())
+        self.assertTrue(result[0].get_value() > 0)
 
     def test_process_none(self):
         with self.assertRaises(Exception):

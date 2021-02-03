@@ -20,8 +20,8 @@ class SensorProcessor(ABC):
 
     @abstractmethod
     def setup(self):
-        """Abstract method for setting up parameters or sensor specific classes
-        """
+        """Abstract method for setting up parameters or sensor specific classes, especially
+           if something needs to be setup after a sensor is loaded from the database"""
         pass
 
     def set_name(self, name):
@@ -112,10 +112,12 @@ class SensorProcessor(ABC):
             raise Exception("value cannot be None or Empty")
         return key in self._parameters.keys() and self._parameters[key] == value
 
-    def _create_data_point(self, value, ts):
+    def _create_data_point(self, name, value, ts):
         """Constructs a data point with the given value and timestamp and commit the changes to the database
 
         Args:
+            **name (str)**: the name of the data point
+
             **value (float)**: the measured value
 
             **ts (int)**: the timestamp
@@ -124,7 +126,7 @@ class SensorProcessor(ABC):
             the newly created DataPoint
         """
         db = get_db()
-        dp = DataPoint(value=value, timestamp=ts)
+        dp = DataPoint(name=name, value=value, timestamp=ts)
         db.session.add(dp)
         sensor = Sensor.query.filter_by(name=self._sensor_name).first()
         sensor.add_data_point(dp)
@@ -132,16 +134,23 @@ class SensorProcessor(ABC):
         return dp
 
     def process(self, ts):
-        """Template method which collects data from the sensor and creates then creates the data point
+        """Template method which collects data from the sensor and creates then creates the data points
 
         Args:
             **ts (int)**: the timestamp at which this reading is associated with
 
         Return:
-            The created data point
+            list: a list of created datapoints
         """
-        value = self._read_sensor(ts)
-        return self._create_data_point(value, ts)
+        data = self._read_sensor(ts)
+
+        datapoints = []
+
+        for item in data.items():
+            # dict.items() is a list of tuples name first, then value
+            datapoints.append(self._create_data_point(item[0], item[1], ts))
+
+        return datapoints
 
     @abstractmethod
     def _read_sensor(self, ts):

@@ -15,8 +15,8 @@ class SimulatedProcessorTest(unittest.TestCase):
     def test_read_sensor(self):
         result = self.fixture._read_sensor(int(datetime.timestamp(datetime.now())))
         print(f"Result: {result}")
-        self.assertTrue(result > 0)
-        self.assertTrue(isinstance(result, float))
+        self.assertTrue(result['simulated'] > 0)
+        self.assertTrue(isinstance(result, dict))
 
 
 if __name__ == '__main__':

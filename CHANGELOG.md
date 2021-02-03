@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.4.0](https://github.com/isu-avista/sensors/releases/tag/v0.4.0) - 2021-02-02
+### Added
+
+### Changed
+* Updated docstrings and documentation for all sensor implementations
+* Sensors now return a dictionary where keys will fill the name field for a data point
+  and the value of the pair will be the data value
+
+### Deleted
+* Removed all the previously added print statements
+
 ## [0.3.0](https://github.com/isu-avista/sensors/releases/tag/v0.3.0) - 2021-01-29
 ### Added
 * Added an abstract setup method to sensor_processor for inheriting processors to 

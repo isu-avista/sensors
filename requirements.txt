@@ -18,3 +18,4 @@ scipy==1.5.4
 adafruit-circuitpython-dht==3.5.4
 adafruit-circuitpython-mcp3xxx==1.4.3
 RPi.GPIO==0.7.0
+requests~=2.25.0

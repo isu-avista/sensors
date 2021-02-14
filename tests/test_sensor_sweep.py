@@ -1,7 +1,7 @@
 import unittest
 from tests.base_test import BaseTest
 from avista_sensors.sensor_sweep import SensorSweep
-from avista_sensors.manager_state import ManagerState
+from avista_sensors.sweep_state import SweepState
 from avista_data.sensor import Sensor
 from avista_data import db
 from avista_data.unit import Unit
@@ -24,22 +24,22 @@ class SensorSweepTest(BaseTest):
         time.sleep(5)
         self.fixture.stop()
         self.fixture.join()
-        self.assertEqual(ManagerState.IDLE, self.fixture.state)
+        self.assertEqual(SweepState.IDLE, self.fixture.state)
 
     def test_stop(self):
-        self.assertEqual(ManagerState.IDLE, self.fixture.state)
+        self.assertEqual(SweepState.IDLE, self.fixture.state)
         self.fixture.init()
         self.fixture.start()
         time.sleep(2)
-        self.assertEqual(ManagerState.EXECUTING, self.fixture.state)
+        self.assertEqual(SweepState.EXECUTING, self.fixture.state)
         self.fixture.stop()
         self.fixture.join()
-        self.assertEqual(ManagerState.IDLE, self.fixture.state)
+        self.assertEqual(SweepState.IDLE, self.fixture.state)
 
     def test_init(self):
         self.fixture.init()
         self.assertEqual(1, len(self.fixture.processors))
-        self.assertEqual(ManagerState.INITIALIZING, self.fixture.state)
+        self.assertEqual(SweepState.INITIALIZING, self.fixture.state)
 
 
 if __name__ == '__main__':

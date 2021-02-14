@@ -6,8 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+* Added a class `DataTransporter` which collects data and sends it to a server
 
 ### Changed
+* Changed the constructor for `SensorSweep` to take as parameters the periodicity
+  and holding period values
+* Change the name of `ManagerState` to be `SweepState` to be in alignment with the
+  rest of the code.
+* Integrated the `DataTransporter` with the main loop of the `SensorSweep`
+* Updated documentation
 
 ### Deleted
 

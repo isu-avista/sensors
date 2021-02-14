@@ -10,9 +10,9 @@ Welcome to Avista-Sensors's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-avista-sensors manager_state
+avista-sensors sweep_state
 ============================
-.. automodule:: avista_sensors.manager_state
+.. automodule:: avista_sensors.sweep_state
    :members:
 
 avista-sensors processor_loader
@@ -23,6 +23,16 @@ avista-sensors processor_loader
 avista-sensors sensor_processor
 ===============================
 .. automodule:: avista_sensors.sensor_processor
+   :members:
+
+avista-sensors sensor_sweep
+===========================
+.. automodule:: avista_sensors.sensor_sweep
+   :members:
+
+avista-sensors data_transporter
+===============================
+.. automodule:: avista_sensors.data_transporter
    :members:
 
 avista-sensors.impl random_processor

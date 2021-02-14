@@ -51,10 +51,11 @@ You can also see the complete documentation of the code on the [documentation pa
 This module was contributed to by:
 
 - Isaac D. Griffith
+- Andrew Christiansen
 
 ## License
 
-Copyright (c) 2020 Idaho State University Empirical Software Engineering Laboratory
+Copyright (c) 2020, 2021 Idaho State University Empirical Software Engineering Laboratory
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

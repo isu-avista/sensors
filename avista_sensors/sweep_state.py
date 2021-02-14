@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class ManagerState(Enum):
+class SweepState(Enum):
     """Enum representing the various states of the processor manager"""
 
     IDLE = 0
@@ -26,20 +26,20 @@ class ManagerState(Enum):
             **label (str)**: String representation of ManagerState literal
 
         Returns:
-            ManagerState: literal of ManagerSTate
+            SweepState: literal of ManagerSTate
 
         Raises:
             NotImplementedError: If value is not a defined enum literal of ManagerState
         """
         if label in ('IDLE', 'idle', 'Idle'):
-            return ManagerState.IDLE
+            return SweepState.IDLE
         elif label in ('STARTING', 'starting', 'Starting'):
-            return ManagerState.STARTING
+            return SweepState.STARTING
         elif label in ('INITIALIZING', 'initializing', 'Initializing'):
-            return ManagerState.INITIALIZING
+            return SweepState.INITIALIZING
         elif label in ('EXECUTING', 'executing', 'Executing'):
-            return ManagerState.EXECUTING
+            return SweepState.EXECUTING
         elif label in ('STOPPING', 'stopping', 'Stopping'):
-            return ManagerState.STOPPING
+            return SweepState.STOPPING
         else:
             raise NotImplementedError

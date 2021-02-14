@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'Avista-Sensors'
-copyright = '2020, Isaac Griffith'
+copyright = '2020-2021, Idaho State University Empirical Software Engineering Laboratory'
 author = 'Isaac Griffith'
 
 # The full version, including alpha/beta/rc tags
-release = '0.4.0'
+release = '0.5.0'
 
 
 # -- General configuration ---------------------------------------------------

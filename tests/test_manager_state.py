@@ -1,42 +1,42 @@
 import unittest
-from avista_sensors.manager_state import ManagerState
+from avista_sensors.sweep_state import SweepState
 
 
 class ManagerStateTest(unittest.TestCase):
     def test_from_str(self):
         oracle = [
-            ["IDLE", ManagerState.IDLE],
-            ["idle", ManagerState.IDLE],
-            ["Idle", ManagerState.IDLE],
-            ["STARTING", ManagerState.STARTING],
-            ["starting", ManagerState.STARTING],
-            ["Starting", ManagerState.STARTING],
-            ["INITIALIZING", ManagerState.INITIALIZING],
-            ["initializing", ManagerState.INITIALIZING],
-            ["Initializing", ManagerState.INITIALIZING],
-            ["EXECUTING", ManagerState.EXECUTING],
-            ["executing", ManagerState.EXECUTING],
-            ["Executing", ManagerState.EXECUTING],
-            ["STOPPING", ManagerState.STOPPING],
-            ["stopping", ManagerState.STOPPING],
-            ["Stopping", ManagerState.STOPPING]
+            ["IDLE", SweepState.IDLE],
+            ["idle", SweepState.IDLE],
+            ["Idle", SweepState.IDLE],
+            ["STARTING", SweepState.STARTING],
+            ["starting", SweepState.STARTING],
+            ["Starting", SweepState.STARTING],
+            ["INITIALIZING", SweepState.INITIALIZING],
+            ["initializing", SweepState.INITIALIZING],
+            ["Initializing", SweepState.INITIALIZING],
+            ["EXECUTING", SweepState.EXECUTING],
+            ["executing", SweepState.EXECUTING],
+            ["Executing", SweepState.EXECUTING],
+            ["STOPPING", SweepState.STOPPING],
+            ["stopping", SweepState.STOPPING],
+            ["Stopping", SweepState.STOPPING]
         ]
         for x in range(len(oracle)):
-            self.assertEqual(oracle[x][1], ManagerState.from_str(oracle[x][0]))
+            self.assertEqual(oracle[x][1], SweepState.from_str(oracle[x][0]))
 
     def test_invalid_str(self):
         with self.assertRaises(NotImplementedError):
-            ManagerState.from_str("Test")
+            SweepState.from_str("Test")
 
     def test_none(self):
         with self.assertRaises(NotImplementedError):
-            ManagerState.from_str(None)
+            SweepState.from_str(None)
 
     def test_repr(self):
-        self.assertEqual("Manager State: IDLE", ManagerState.IDLE.__repr__(), "repr not same")
+        self.assertEqual("Manager State: IDLE", SweepState.IDLE.__repr__(), "repr not same")
 
     def test_str(self):
-        self.assertEqual("IDLE", str(ManagerState.IDLE), "string representation not same")
+        self.assertEqual("IDLE", str(SweepState.IDLE), "string representation not same")
 
 
 if __name__ == '__main__':

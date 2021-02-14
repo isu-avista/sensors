@@ -55,21 +55,53 @@ class SensorSweep(Thread):
         self.app = app
 
     def set_periodicity(self, periodicity):
+        """
+        Sets the time to wait between sensor sweeps to the provided value.
+
+        Args:
+            **periodicity (float)**: the number of seconds to wait in between sensor data collection sweeps
+
+        Raises:
+             Exception: when the provided value is either not a float or is <= 0
+        """
         if float(periodicity) and periodicity > 0:
             self.periodicity = periodicity
         else:
             raise Exception("periodicity must be a float greater than 0")
 
     def get_periodicity(self):
+        """
+        Returns the current value of the periodicity
+
+        Returns:
+            current periodicity
+        """
         return self.periodicity
 
     def set_holding_period(self, holding):
+        """
+        Updates the number of periods to hold data to the given value
+
+        Args:
+            **holding (int)**: The number of periods for which collected data will be held in the database be for
+                               sending it to the server. Each period is defined by the periodicity value.
+
+        Raises:
+            Exception: if the provided value is not an integer or has a value <= 0
+        """
+
         if int(holding) and holding > 0:
             self.max_holding_period = holding
         else:
             raise Exception("holding period must be an integer greater than 0")
 
-    def get_holding_period(self, holding):
+    def get_holding_period(self):
+        """
+        Returns the current number of periods to hold data in the database
+
+        Returns:
+            current holding period value
+        """
         return self.max_holding_period
 
     def run(self):

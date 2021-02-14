@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deleted
+
+## [0.5.0](https://github.com/isu-avista/sensors/releases/tag/v0.5.0) - 2021-02-13
+### Added
 * Added a class `DataTransporter` which collects data and sends it to a server
 
 ### Changed

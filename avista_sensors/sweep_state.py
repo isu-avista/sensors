@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class SweepState(Enum):
-    """Enum representing the various states of the processor manager"""
+    """Enum representing the various states of the sensor sweep"""
 
     IDLE = 0
     STARTING = 1
@@ -11,11 +11,11 @@ class SweepState(Enum):
     STOPPING = 4
 
     def __repr__(self):
-        """An unambiguous representation of ManagerState"""
+        """An unambiguous representation of SweepState"""
         return f"Manager State: {self.name}"
 
     def __str__(self):
-        """A readable representation of ManagerState"""
+        """A readable representation of SweepState"""
         return f"{self.name}"
 
     @staticmethod
@@ -23,13 +23,13 @@ class SweepState(Enum):
         """Provides an instance of the Role for the given string.
 
         Args:
-            **label (str)**: String representation of ManagerState literal
+            **label (str)**: String representation of SweepState literal
 
         Returns:
-            SweepState: literal of ManagerSTate
+            SweepState: literal of SweepState
 
         Raises:
-            NotImplementedError: If value is not a defined enum literal of ManagerState
+            NotImplementedError: If value is not a defined enum literal of SweepState
         """
         if label in ('IDLE', 'idle', 'Idle'):
             return SweepState.IDLE

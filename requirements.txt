@@ -1,4 +1,4 @@
-git+ssh://git@github.com/isu-avista/data.git
+git+git://github.com/isu-avista/data.git
 pyyaml==5.3.1
 python-dotenv==0.15.0
 statsmodels==0.12.1
@@ -19,3 +19,7 @@ adafruit-circuitpython-dht==3.5.4
 adafruit-circuitpython-mcp3xxx==1.4.3
 RPi.GPIO==0.7.0
 requests~=2.25.0
+pytest>=6.2.2
+codecov>=2.1.11
+pytest-cov>=2.11.1
+fake-rpi>=0.7.1

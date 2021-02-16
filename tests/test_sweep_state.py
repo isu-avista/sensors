@@ -1,8 +1,15 @@
+import sys
+import fake_rpi
+
+sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi
+sys.modules['RPi.GPIO'] = fake_rpi.RPi.GPIO # Fake GPIO
+sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
+
 import unittest
 from avista_sensors.sweep_state import SweepState
 
 
-class ManagerStateTest(unittest.TestCase):
+class SweepStateTest(unittest.TestCase):
     def test_from_str(self):
         oracle = [
             ["IDLE", SweepState.IDLE],

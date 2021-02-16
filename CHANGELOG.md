@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.5.1](https://github.com/isu-avista/sensors/releases/tag/v0.5.1) - 2021-02-16
+### Added
+
+### Changed
+* Updated dependencies
+* Added fake-rpi as a dependency to begin the process of improving the tests
+* Modified the travis-ci spec to start the process of automated testing
+
+### Deleted
+
 ## [0.5.0](https://github.com/isu-avista/sensors/releases/tag/v0.5.0) - 2021-02-13
 ### Added
 * Added a class `DataTransporter` which collects data and sends it to a server

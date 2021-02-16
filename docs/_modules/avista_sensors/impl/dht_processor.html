@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.impl.random_processor &#8212; Avista-Sensors 0.5.1 documentation</title>
+    <title>avista_sensors.impl.dht_processor &#8212; Avista-Sensors 0.5.1 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     
@@ -29,7 +29,7 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">Avista-Sensors 0.5.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">avista_sensors.impl.random_processor</a></li> 
+        <li class="nav-item nav-item-this"><a href="">avista_sensors.impl.dht_processor</a></li> 
       </ul>
     </div>  
 
@@ -38,41 +38,37 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for avista_sensors.impl.random_processor</h1><div class="highlight"><pre>
+  <h1>Source code for avista_sensors.impl.dht_processor</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">avista_sensors.sensor_processor</span> <span class="kn">import</span> <span class="n">SensorProcessor</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">adafruit_dht</span>
 
 
-<div class="viewcode-block" id="RandomProcessor"><a class="viewcode-back" href="../../../index.html#avista_sensors.impl.random_processor.RandomProcessor">[docs]</a><span class="k">class</span> <span class="nc">RandomProcessor</span><span class="p">(</span><span class="n">SensorProcessor</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Represents a simulated sensor providing a logarithmic data stream.</span>
-
-<span class="sd">    The data provided represents the typical increase of temperature in the windings of an AC Motor</span>
+<div class="viewcode-block" id="DHTProcessor"><a class="viewcode-back" href="../../../index.html#avista_sensors.impl.dht_processor.DHTProcessor">[docs]</a><span class="k">class</span> <span class="nc">DHTProcessor</span><span class="p">(</span><span class="n">SensorProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;DHT22 sensor implementation (Temperature and Humidity)</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        **__base_ts (int)**: the base time stamp used in the calculation</span>
+<span class="sd">        **_sensor (:obj: `DHT22`)**: DHT22 sensor object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="RandomProcessor.setup"><a class="viewcode-back" href="../../../index.html#avista_sensors.impl.random_processor.RandomProcessor.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span></div>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Constructs a new SimulatedProcessor with a base timestamp of now&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">RandomProcessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__base_ts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+        <span class="sd">&quot;&quot;&quot;Constructs a new DHTProcessor instance&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="DHTProcessor.setup"><a class="viewcode-back" href="../../../index.html#avista_sensors.impl.dht_processor.DHTProcessor.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets up sensor configurations that should happen after loading from the database&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span> <span class="o">=</span> <span class="n">adafruit_dht</span><span class="o">.</span><span class="n">DHT22</span><span class="p">(</span><span class="n">board</span><span class="o">.</span><span class="n">D15</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_read_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Simulates the reading of data from a sensor</span>
+        <span class="sd">&quot;&quot;&quot;Reads data from the sensor</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **ts (int)**: timestamp of the data to be collected</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: name and data value</span>
+<span class="sd">            **ts (int)**: timestamp of when the data was read</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;random&quot;</span><span class="p">:</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">ts</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__base_ts</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">71</span>
+            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
+            <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span><span class="o">.</span><span class="n">humidity</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="n">data</span></div>
@@ -109,7 +105,7 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">Avista-Sensors 0.5.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">avista_sensors.impl.random_processor</a></li> 
+        <li class="nav-item nav-item-this"><a href="">avista_sensors.impl.dht_processor</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -1,17 +1,23 @@
 language: python
 dist: xenial
 python:
+  - 3.6
   - 3.7
   - 3.8
 services: []
 env: []
-install:
+before_install:
+  - python --version
+  - pip install -U pip
   - pip install -q -r requirements.txt
   - pip install -q -e .
   - pip install prospector[with_bandit]
   - pip install coverage
+install:
+  - pip install ".[test]" . # install package + test dependencies
 script:
-  - python setup.py test
+  - pytest --cov=avista_sensors
+after_success:
   - prospector --tool pylint --tool pep8 --tool dodgy --tool pydocstyle --tool bandit
   - coverage run -m unittest discover
   - coverage report

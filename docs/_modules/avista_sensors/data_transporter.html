@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.data_transporter &#8212; Avista-Sensors 0.5.2 documentation</title>
+    <title>avista_sensors.data_transporter &#8212; Avista-Sensors 0.5.4 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.data_transporter</a></li> 
       </ul>
@@ -45,6 +45,7 @@
 <span class="kn">from</span> <span class="nn">avista_data.device</span> <span class="kn">import</span> <span class="n">Device</span>
 <span class="kn">from</span> <span class="nn">avista_data</span> <span class="kn">import</span> <span class="n">db</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 
 <div class="viewcode-block" id="DataTransporter"><a class="viewcode-back" href="../../index.html#avista_sensors.data_transporter.DataTransporter">[docs]</a><span class="k">class</span> <span class="nc">DataTransporter</span><span class="p">:</span>
@@ -65,11 +66,12 @@
         <span class="n">servers</span> <span class="o">=</span> <span class="n">Server</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collect_data</span><span class="p">()</span>
         <span class="n">rv</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Transferring data&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">server</span> <span class="ow">in</span> <span class="n">servers</span><span class="p">:</span>
             <span class="n">ip</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">get_ip_address</span><span class="p">()</span>
             <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">get_port</span><span class="p">()</span>
             <span class="n">rv</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;http://</span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s1">/api/data&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;transferring data to: http://</span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/api/data&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;transferring data to: http://</span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/api/data&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">rv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;application/json&#39;</span> <span class="ow">in</span> <span class="n">rv</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">rv</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clear_old_data</span><span class="p">()</span></div>
 
@@ -138,7 +140,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.data_transporter</a></li> 
       </ul>

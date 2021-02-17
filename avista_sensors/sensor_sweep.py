@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO
 from multiprocessing import Process
 
 
-class SensorSweep(Thread):
+class SensorSweep(Process):
     """Manages the data collection from sensor processors
 
     After constructing a SensorSweep, you should call the init() method followed

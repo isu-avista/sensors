@@ -8,6 +8,7 @@ import avista_sensors.processor_loader as pl
 from avista_data.sensor import Sensor
 from avista_sensors.data_transporter import DataTransporter
 import RPi.GPIO as GPIO
+from multiprocessing import Process
 
 
 class SensorSweep(Thread):
@@ -158,6 +159,7 @@ class SensorSweep(Thread):
 
         periods = 0
         while True:
+            print("Collecting data")
             with self.app.app_context():
                 if self.stopped():
                     return
@@ -168,3 +170,4 @@ class SensorSweep(Thread):
                 periods += 1
                 if periods >= self.max_holding_period:
                     self._transporter.transfer()
+                    periods = 0

@@ -28,6 +28,7 @@ class DataTransporter:
             ip = server.get_ip_address()
             port = server.get_port()
             rv = requests.post(f'http://{ip}:{port}/api/data', json=data)
+            print(f"transferring data to: http://{ip}:{port}/api/data")
         if rv is not None and 'application/json' in rv.headers['Content-Type'] and rv.json()['status'] == "success":
             self.clear_old_data()
 

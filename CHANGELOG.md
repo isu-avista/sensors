@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.5.2](https://github.com/isu-avista/sensors/releases/tag/v0.5.1) - 2021-02-16
+### Added
+
+### Changed
+* Added some commands for debugging the data transporter
+
+### Deleted
+
 ## [0.5.1](https://github.com/isu-avista/sensors/releases/tag/v0.5.1) - 2021-02-16
 ### Added
 

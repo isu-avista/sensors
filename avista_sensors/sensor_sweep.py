@@ -159,7 +159,7 @@ class SensorSweep(Thread):
 
         periods = 0
         while True:
-            print("Collecting data")
+            logging.info("Collecting data")
             with self.app.app_context():
                 if self.stopped():
                     return

@@ -4,6 +4,7 @@ from avista_data.server import Server
 from avista_data.device import Device
 from avista_data import db
 from collections import deque
+import logging
 
 
 class DataTransporter:
@@ -24,11 +25,12 @@ class DataTransporter:
         servers = Server.query.all()
         data = self.collect_data()
         rv = None
+        logging.info("Transferring data")
         for server in servers:
             ip = server.get_ip_address()
             port = server.get_port()
             rv = requests.post(f'http://{ip}:{port}/api/data', json=data)
-            print(f"transferring data to: http://{ip}:{port}/api/data")
+            logging.info(f"transferring data to: http://{ip}:{port}/api/data")
         if rv is not None and 'application/json' in rv.headers['Content-Type'] and rv.json()['status'] == "success":
             self.clear_old_data()
 

@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.5.4](https://github.com/isu-avista/sensors/releases/tag/v0.5.4) - 2021-02-17
+### Added
+
+### Changed
+* Shifted SensorSweep from a thread to a process
+
+### Deleted
+
 ## [0.5.3](https://github.com/isu-avista/sensors/releases/tag/v0.5.3) - 2021-02-17
 ### Added
 

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.sensor_sweep &#8212; Avista-Sensors 0.5.1 documentation</title>
+    <title>avista_sensors.sensor_sweep &#8212; Avista-Sensors 0.5.2 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_sweep</a></li> 
       </ul>
@@ -49,6 +49,7 @@
 <span class="kn">from</span> <span class="nn">avista_data.sensor</span> <span class="kn">import</span> <span class="n">Sensor</span>
 <span class="kn">from</span> <span class="nn">avista_sensors.data_transporter</span> <span class="kn">import</span> <span class="n">DataTransporter</span>
 <span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="k">as</span> <span class="nn">GPIO</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
 
 
 <div class="viewcode-block" id="SensorSweep"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep">[docs]</a><span class="k">class</span> <span class="nc">SensorSweep</span><span class="p">(</span><span class="n">Thread</span><span class="p">):</span>
@@ -199,6 +200,7 @@
 
         <span class="n">periods</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Collecting data&quot;</span><span class="p">)</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">app_context</span><span class="p">():</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">():</span>
                     <span class="k">return</span>
@@ -208,7 +210,8 @@
                 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span><span class="p">)</span>
                 <span class="n">periods</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">periods</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_holding_period</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_transporter</span><span class="o">.</span><span class="n">transfer</span><span class="p">()</span></div>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_transporter</span><span class="o">.</span><span class="n">transfer</span><span class="p">()</span>
+                    <span class="n">periods</span> <span class="o">=</span> <span class="mi">0</span></div>
 </pre></div>
 
             <div class="clearer"></div>
@@ -240,7 +243,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_sweep</a></li> 
       </ul>

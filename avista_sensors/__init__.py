@@ -5,3 +5,5 @@ import avista_sensors.processor_loader
 import avista_sensors.sensor_sweep
 import avista_sensors.sensor_processor
 import avista_sensors.data_transporter
+import avista_sensors.service
+import avista_sensors.config

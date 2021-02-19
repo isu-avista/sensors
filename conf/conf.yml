@@ -1,0 +1,9 @@
+---
+'DBMS Type': postress
+'DBMS IP': localhost
+'DBMS Port': 5432
+'DBMS User': avista
+'DBMS Pass': avistapw
+'DBMS Name': avistadb
+'Hostname': 0.0.0.0
+'Port': 8558

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+cd server
+docker build \
+       --build-arg dbtype=postgres \
+       --build-arg dbname=avistadb \
+       --build-arg dbuser=avista \
+       --build-arg dbpass=avistapw \
+       --build-arg dbip=localhost \
+       --build-arg dbport=5432 \
+       --build-arg hostname=0.0.0.0 \
+       --build-arg hostport=5000 \
+       -t isuese/avista-iot-data:latest \
+       .
+docker push isuese/avista-iot-data:latest

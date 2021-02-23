@@ -2,6 +2,7 @@ import requests
 from avista_data.data_point import DataPoint
 from avista_data.server import Server
 from avista_data.device import Device
+from avista_data.sensor import Sensor
 from collections import deque
 import logging
 
@@ -25,11 +26,13 @@ class DataTransporter:
         servers = self.db.query(Server).all()
         data = self.collect_data()
         rv = None
+        print("Transferring data")
         logging.info("Transferring data")
         for server in servers:
             ip = server.get_ip_address()
             port = server.get_port()
             rv = requests.post(f'http://{ip}:{port}/api/data', json=data)
+            print(f"sending data to: http://{ip}:{port}/api/data")
             logging.info(f"transferring data to: http://{ip}:{port}/api/data")
         if rv is not None and 'application/json' in rv.headers['Content-Type'] and rv.json()['status'] == "success":
             self.clear_old_data()
@@ -49,7 +52,7 @@ class DataTransporter:
         max_ts = 0
         if len(self._markers) == 0:
             self._markers.append(0)
-        for sensor in device.sensors:
+        for sensor in self.db.query(Sensor).all():
             points = []
             for d in filter(lambda s: s.timestamp > self._markers[0], sensor.data):
                 points.append(d.to_dict())

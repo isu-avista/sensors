@@ -1,11 +1,13 @@
 from avista_sensors import config
 from avista_sensors.sensor_sweep import SensorSweep
 from avista_data.device import Device
+from avista_data.sensor import Sensor
 from pathlib import Path
 import avista_data
 import logging
 import os
 import socket
+import time
 
 
 class Service:
@@ -54,7 +56,19 @@ class Service:
         self._setup_sweep()
 
     def _setup_sweep(self):
-        periodicity = self.db.query(Device).first().get_periodicity()
+        print(self.db)
+        if self.db.query(Device).count() < 1:
+            d = Device()
+            d.set_description("test")
+            d.set_name("test")
+            d.set_location("home")
+            self.db.add(d)
+            self.db.commit()
+        print("Num Devices",self.db.query(Sensor).count())
+        while self.db.query(Sensor).count() < 1:
+            print("Waiting for a device...")
+            time.sleep(10)
+        periodicity = 3
         self.sweep = SensorSweep(self.db, periodicity, 3)
         self.sweep.init()
 
@@ -80,7 +94,7 @@ class Service:
                 user = self._config[key]
             elif key == "DBMS Pass":
                 passwd = self._config[key]
-            elif key == "DBMS DB Name":
+            elif key == "DBMS Name":
                 db = self._config[key]
 
         user_pass = ''
@@ -92,6 +106,7 @@ class Service:
             ip_port = f'{ip}:{port}'
         elif ip and not port:
             ip_port = ip
+        print(f'{typ}://{user_pass}{ip_port}/{db}')
         return f'{typ}://{user_pass}{ip_port}/{db}'
 
     def _setup_database(self):

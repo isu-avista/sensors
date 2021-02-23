@@ -10,6 +10,6 @@ if path.exists():
 if __name__ == '__main__':
     service = Service.get_instance()
     service.initialize()
-    service.start()
+    # service.start()
     service.run()
 

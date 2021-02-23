@@ -1,5 +1,5 @@
 ---
-'DBMS Type': postress
+'DBMS Type': postgres
 'DBMS IP': localhost
 'DBMS Port': 5432
 'DBMS User': avista

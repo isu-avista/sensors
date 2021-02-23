@@ -25,7 +25,7 @@ def init_argparse() -> argparse.ArgumentParser:
 def generate_server_config(dbtype, dbname, dbip, dbport, dbuser, dbpass, hostname, hostport):
     config = {
         'DBMS Type': dbtype,
-        'DBMS DB Name': dbname,
+        'DBMS Name': dbname,
         'DBMS IP Address': dbip,
         'DBMS Port': dbport,
         'DBMS Username': dbuser,

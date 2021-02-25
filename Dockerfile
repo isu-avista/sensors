@@ -1,5 +1,5 @@
 # get base image
-FROM balenalib/raspberry-pi-debian:latest
+FROM python:3
 
 # Arguments
 ARG dbtype
@@ -17,7 +17,7 @@ WORKDIR ./
 # install dependencies
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y apt-utils
-RUN apt-get install -y python3 python3-pip python3-dev python3-wheel python3-venv gunicorn3 python3-setuptools python3-rpi.gpio python3-smbus git ssh libatlas-base-dev libpq-dev gpiod libgpiod-dev
+RUN apt-get install -y python3 python3-pip python3-dev python3-wheel python3-venv gunicorn3 python3-setuptools python3-smbus git ssh libatlas-base-dev libpq-dev gpiod libgpiod-dev
 
 # copy requirements
 COPY ./requirements.txt ./requirements.txt

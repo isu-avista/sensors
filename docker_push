@@ -3,7 +3,8 @@
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 cd server
-docker build \
+docker buildx build \
+       --platform linux/arm/v7 \
        --build-arg dbtype=postgres \
        --build-arg dbname=avistadb \
        --build-arg dbuser=avista \

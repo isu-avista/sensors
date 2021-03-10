@@ -59,6 +59,7 @@ def main() -> None:
     port = dic['hostport']
 
     generate_server_config(dbtype, dbname, dbip, dbport, dbuser, dbpass, host, port)
+    generate_logs_directory()
 
 
 if __name__ == '__main__':

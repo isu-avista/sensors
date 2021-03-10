@@ -1,5 +1,5 @@
 # get base image
-FROM python:3
+FROM balenalib/raspberry-pi-debian:latest
 
 # Arguments
 ARG dbtype

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.sensor_processor &#8212; Avista-Sensors 0.5.4 documentation</title>
+    <title>avista_sensors.sensor_processor &#8212; Avista-Sensors 0.5.5 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
@@ -13,7 +13,6 @@
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -27,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.4 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.5 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_processor</a></li> 
       </ul>
@@ -41,8 +40,8 @@
   <h1>Source code for avista_sensors.sensor_processor</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 <span class="kn">from</span> <span class="nn">avista_data.data_point</span> <span class="kn">import</span> <span class="n">DataPoint</span>
-<span class="kn">from</span> <span class="nn">avista_data.data_manager</span> <span class="kn">import</span> <span class="n">get_db</span>
 <span class="kn">from</span> <span class="nn">avista_data.sensor</span> <span class="kn">import</span> <span class="n">Sensor</span>
+<span class="kn">import</span> <span class="nn">avista_data.database</span>
 
 
 <div class="viewcode-block" id="SensorProcessor"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor">[docs]</a><span class="k">class</span> <span class="nc">SensorProcessor</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
@@ -58,6 +57,7 @@
         <span class="sd">&quot;&quot;&quot;Constructs a new sensor processor&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">avista_data</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">db</span>
 
 <div class="viewcode-block" id="SensorProcessor.setup"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.setup">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -166,12 +166,11 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            the newly created DataPoint</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">db</span> <span class="o">=</span> <span class="n">get_db</span><span class="p">()</span>
         <span class="n">dp</span> <span class="o">=</span> <span class="n">DataPoint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">)</span>
-        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
-        <span class="n">sensor</span> <span class="o">=</span> <span class="n">Sensor</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+        <span class="n">sensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Sensor</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sensor_name</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
         <span class="n">sensor</span><span class="o">.</span><span class="n">add_data_point</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
-        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">dp</span>
 
 <div class="viewcode-block" id="SensorProcessor.process"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_processor.SensorProcessor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
@@ -235,14 +234,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.4 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.5 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_processor</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020-2021, Idaho State University Empirical Software Engineering Laboratory.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.2.
     </div>
   </body>
 </html>

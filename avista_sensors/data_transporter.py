@@ -2,7 +2,7 @@ import requests
 from avista_data.data_point import DataPoint
 from avista_data.server import Server
 from avista_data.device import Device
-from avista_data import db
+from avista_data.sensor import Sensor
 from collections import deque
 import logging
 
@@ -14,22 +14,25 @@ class DataTransporter:
         **_markers (deque)**: queue of timestamps when the last time data was sent to the server
     """
 
-    def __init__(self):
+    def __init__(self, db):
         """Constructs a new sensor processor"""
         self._markers = deque()
+        self.db = db
 
     def transfer(self):
         """Collects and transfers data to each of the known sensors, and then if the data was transferred removes
         that data from the database
         """
-        servers = Server.query.all()
+        servers = self.db.query(Server).all()
         data = self.collect_data()
         rv = None
+        print("Transferring data")
         logging.info("Transferring data")
         for server in servers:
             ip = server.get_ip_address()
             port = server.get_port()
             rv = requests.post(f'http://{ip}:{port}/api/data', json=data)
+            print(f"sending data to: http://{ip}:{port}/api/data")
             logging.info(f"transferring data to: http://{ip}:{port}/api/data")
         if rv is not None and 'application/json' in rv.headers['Content-Type'] and rv.json()['status'] == "success":
             self.clear_old_data()
@@ -44,12 +47,12 @@ class DataTransporter:
         Returns:
             the collected data as a dictionary.
         """
-        device = Device.query.first()
+        device = self.db.query(Device).first()
         data = {'device': device.to_dict(), 'data': []}
         max_ts = 0
         if len(self._markers) == 0:
             self._markers.append(0)
-        for sensor in device.sensors:
+        for sensor in self.db.query(Sensor).all():
             points = []
             for d in filter(lambda s: s.timestamp > self._markers[0], sensor.data):
                 points.append(d.to_dict())
@@ -64,7 +67,7 @@ class DataTransporter:
         """Finds and removes all data with a timestamp less than the smallest timestamp in the markers deque."""
         if len(self._markers) >= 3:
             drop_ts = self._markers.popleft()
-            to_drop = DataPoint.query.filter(DataPoint.timestamp <= drop_ts).all()
+            to_drop = self.db.query(DataPoint).filter(DataPoint.timestamp <= drop_ts).all()
             for d in to_drop:
-                db.session.delete(d)
-            db.session.commit()
+                self.db.delete(d)
+            self.db.commit()

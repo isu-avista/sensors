@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from avista_data.data_point import DataPoint
-from avista_data.data_manager import get_db
 from avista_data.sensor import Sensor
+import avista_data.database
 
 
 class SensorProcessor(ABC):
@@ -17,6 +17,7 @@ class SensorProcessor(ABC):
         """Constructs a new sensor processor"""
         self._parameters = {}
         self._sensor_name = ""
+        self.db = avista_data.database.db
 
     @abstractmethod
     def setup(self):
@@ -125,12 +126,11 @@ class SensorProcessor(ABC):
         Returns:
             the newly created DataPoint
         """
-        db = get_db()
         dp = DataPoint(name=name, value=value, timestamp=ts)
-        db.session.add(dp)
-        sensor = Sensor.query.filter_by(name=self._sensor_name).first()
+        self.db.add(dp)
+        sensor = self.db.query(Sensor).filter_by(name=self._sensor_name).first()
         sensor.add_data_point(dp)
-        db.session.commit()
+        self.db.commit()
         return dp
 
     def process(self, ts):

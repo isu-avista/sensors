@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>avista_sensors.sensor_sweep &#8212; Avista-Sensors 0.5.4 documentation</title>
+    <title>avista_sensors.sensor_sweep &#8212; Avista-Sensors 0.5.5 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
@@ -13,7 +13,6 @@
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -27,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.4 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.5 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_sweep</a></li> 
       </ul>
@@ -41,18 +40,14 @@
   <h1>Source code for avista_sensors.sensor_sweep</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
-<span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">avista_sensors.sweep_state</span> <span class="kn">import</span> <span class="n">SweepState</span>
 <span class="kn">import</span> <span class="nn">avista_sensors.processor_loader</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">avista_data.sensor</span> <span class="kn">import</span> <span class="n">Sensor</span>
 <span class="kn">from</span> <span class="nn">avista_sensors.data_transporter</span> <span class="kn">import</span> <span class="n">DataTransporter</span>
 <span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="k">as</span> <span class="nn">GPIO</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
 
 
-<div class="viewcode-block" id="SensorSweep"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep">[docs]</a><span class="k">class</span> <span class="nc">SensorSweep</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
+<div class="viewcode-block" id="SensorSweep"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep">[docs]</a><span class="k">class</span> <span class="nc">SensorSweep</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Manages the data collection from sensor processors</span>
 
 <span class="sd">    After constructing a SensorSweep, you should call the init() method followed</span>
@@ -70,13 +65,11 @@
 <span class="sd">        **config (dict)**: Configuration file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">,</span> <span class="n">holding</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">,</span> <span class="n">holding</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructs a new SensorSweep instance</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **app (:obj: `Flask`)**: The Flask app to which this is associated</span>
-
-<span class="sd">            **config (dict)**: the base configuration for the process manager</span>
+<span class="sd">            **db (:obj: `Session`)**: The SQLAlchemy Session</span>
 
 <span class="sd">            **periodicity (float)**: the number of seconds to wait between sensor recordings</span>
 
@@ -90,11 +83,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">processors</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">periodicity</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_holding_period</span> <span class="o">=</span> <span class="n">holding</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SweepState</span><span class="o">.</span><span class="n">IDLE</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_kill</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transporter</span> <span class="o">=</span> <span class="n">DataTransporter</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transporter</span> <span class="o">=</span> <span class="n">DataTransporter</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SensorSweep.set_periodicity"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep.set_periodicity">[docs]</a>    <span class="k">def</span> <span class="nf">set_periodicity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -147,71 +137,36 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_holding_period</span></div>
 
 <div class="viewcode-block" id="SensorSweep.run"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Main execution body of the thread&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_begin</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_execute</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Starts the sensor sweep&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SweepState</span><span class="o">.</span><span class="n">STARTING</span>
-
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Sensor Sweep Starting&quot;</span><span class="p">)</span>
-
-<div class="viewcode-block" id="SensorSweep.stop"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Stops the sensor sweep by setting the _kill event&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SweepState</span><span class="o">.</span><span class="n">STOPPING</span>
-
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Sensor Sweep Stopping&quot;</span><span class="p">)</span>
-
-        <span class="n">GPIO</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SweepState</span><span class="o">.</span><span class="n">IDLE</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_kill</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="SensorSweep.stopped"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep.stopped">[docs]</a>    <span class="k">def</span> <span class="nf">stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Determines if the sensor sweep is stopped</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            True if the _kill event has been set, False otherwise</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kill</span><span class="o">.</span><span class="n">isSet</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="SensorSweep.init"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initializes the processors using a processor loader&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SweepState</span><span class="o">.</span><span class="n">INITIALIZING</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Sensor Sweep Initializing&quot;</span><span class="p">)</span>
-
-        <span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="n">Sensor</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">load_sensor_from_dict</span><span class="p">(</span><span class="n">sensor</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
-
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Sensor Sweep Initialized&quot;</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Contains the main logic for the sensor sweep</span>
 
 <span class="sd">        Here each attached sensor is polled, the process sleeps for the specified periodicity then continues.</span>
 <span class="sd">        This process goes on until the sensor sweep is stopped.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SweepState</span><span class="o">.</span><span class="n">EXECUTING</span>
-
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Sensor Sweep Running&quot;</span><span class="p">)</span>
 
         <span class="n">periods</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">total_periods</span> <span class="o">=</span> <span class="mi">0</span>
+
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Collecting data&quot;</span><span class="p">)</span>
-            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">app_context</span><span class="p">():</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">():</span>
-                    <span class="k">return</span>
-                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">p</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())))</span>
-                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span><span class="p">)</span>
-                <span class="n">periods</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">if</span> <span class="n">periods</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_holding_period</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_transporter</span><span class="o">.</span><span class="n">transfer</span><span class="p">()</span>
-                    <span class="n">periods</span> <span class="o">=</span> <span class="mi">0</span></div>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span><span class="p">)</span>
+            <span class="n">total_periods</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">periods</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">periods</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_holding_period</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_transporter</span><span class="o">.</span><span class="n">transfer</span><span class="p">()</span>
+                <span class="n">periods</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">total_periods</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">init</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SensorSweep.init"><a class="viewcode-back" href="../../index.html#avista_sensors.sensor_sweep.SensorSweep.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the processors using a processor loader&quot;&quot;&quot;</span>
+        <span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Sensor</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">load_sensor_from_dict</span><span class="p">(</span><span class="n">sensor</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span></div></div>
 </pre></div>
 
             <div class="clearer"></div>
@@ -243,14 +198,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.4 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Avista-Sensors 0.5.5 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">avista_sensors.sensor_sweep</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020-2021, Idaho State University Empirical Software Engineering Laboratory.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.2.
     </div>
   </body>
 </html>

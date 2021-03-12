@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.5.5](https://github.com/isu-avista/sensors/releases/tag/v0.5.5) - 2021-03-12
+### Added
+* Added method to `generate_configs.py` that creates log directory and log file if they do not exist
+
+### Changed
+* Updated `docker_push` script to use buildx for building for arm architecture
+
+### Deleted
+
+## [0.5.3](https://github.com/isu-avista/sensors/releases/tag/v0.5.3) - 2021-02-17
+
 ## [0.5.4](https://github.com/isu-avista/sensors/releases/tag/v0.5.4) - 2021-02-17
 ### Added
 

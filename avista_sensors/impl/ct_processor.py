@@ -13,7 +13,7 @@ class CTProcessor(SensorProcessor):
 
         **pin (:obj: `pin`)**: physical pin of the sensor
 
-        **window (int)**: window over which to sample data
+        **sample_freq (int)**: the frequency of sampling
     """
 
     def __init__(self):
@@ -22,20 +22,20 @@ class CTProcessor(SensorProcessor):
         self.channel = None
         self.pin = None
         self.burden_resistor = 23 # ohm
-        self.outlet_voltage = 240 # volt - we assume fix value for voltage from outlet
-        self.outlet_freq = 50 # Hz - 
+        self.outlet_voltage = 240 # volt - we assume a fixed value for voltage from outlet
+        self.outlet_freq = 50 # Hz  
         self.CTRatio = 2000
         self.sample_number = 20 # number of samples per outlet_freq
         self.sample_freq = self.sample_number * self.outlet_freq  # Hz - the frequency of sampling
 
     def setup(self):
         """Sets up sensor configurations that should happen after loading from the database"""
-        self.pin = board.D22 # ???
+        self.pin = board.D22
         spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
         cs = digitalio.DigitalInOut(self.pin)
         mcp = MCP.MCP3008(spi, cs)
-        # create analog input channel on pin 0
-        self.channel = AnalogIn(mcp, MCP.P0)
+        # create analog input channel on pin 1
+        self.channel = AnalogIn(mcp, MCP.P1)
         
 
     def _read_sensor(self, ts):

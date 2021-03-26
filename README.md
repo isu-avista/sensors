@@ -11,8 +11,9 @@ the design and concepts surrounding this project please see the main
 
 1. [Installation](#installation)
 2. [Usage](#usage)
-3. [Credits](#credits)
-4. [License](#license)
+3. [Sensor Information](#sensor-information)
+4. [Credits](#credits)
+5. [License](#license)
 
 ## Installation
 
@@ -45,6 +46,21 @@ Examples (minus the reading of pins) can be found in the `SimulatedProcess` and 
 in the `avista_sensors.impl` package.
 
 You can also see the complete documentation of the code on the [documentation page](https://isu-avista.github.io/sensors/)
+
+## Sensor Information
+
+**Current Transformer Sensor**  
+Full name: SCT-013-000 100A Non-invasive AC Current Sensor Split-Core Clamp Current Transformer.  
+This sensor transforms the high current to a low current that can be read by microcontrollers. [Here](https://learn.openenergymonitor.org/electricity-monitoring/ct-sensors/introduction) is the link to the official turotial website.    
+Calculate Burden Resistor: R<sub>B</sub> = CT<sub>ratio</sub> * V<sub>pin</sub> / (2 * I<sub>max</sub>)   
+CT<sub>ratio</sub>: Current transformer sensor ratio  
+V<sub>pin</sub>: Rasperry PI pin voltage  
+I<sub>max</sub>: The max current value that the CT sensor can tolerate  
+   
+<span style="color:red">Caution:</span>
+Do not install/use this sensor on a hot wire (to measure the current) before installing the Burden Resistor. A current sensore acts like a *current source*, as such the leads of this sensor must not be left disconneted when the sensor is installed on hot wire; they need to be connected with a burden resistor. Lack of using a burden resistor will create a high voltage (ideally infinite) because the air between the leads acts a an infinite resistor: V = &infin; * I = &#8734;
+   
+
 
 ## Credits
 

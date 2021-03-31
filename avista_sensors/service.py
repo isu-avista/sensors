@@ -68,7 +68,7 @@ class Service:
         while self.db.query(Sensor).count() < 1:
             print("Waiting for a device...")
             time.sleep(10)
-        periodicity = 3
+        periodicity = 30
         self.sweep = SensorSweep(self.db, periodicity, 3)
         self.sweep.init()
 

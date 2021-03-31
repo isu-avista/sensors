@@ -7,6 +7,20 @@ from collections import deque
 import logging
 
 
+# Notes from Isaac:
+# We need to track in a configuration file the last marker successfully sent
+# such that if there is a failure to connect, or a missing server, we can resend data
+# in the case that there is no server or we cannot connect, we need to reset to the top of the queue
+# we need a function/method which upon startup will do the following
+#  - scan through known servers
+#  - for each server it will attempt to connect
+#  - if connection is successful, add the ip and port to a collection to use later
+#    * reduces need to query for servers each time we call transfer
+#  - Perhaps we periodically call this to ensure that we are up to date (later)
+# we need an add function (called by the above) which specifically, verifies that we can connect
+# to a given server
+#  - used during the transfer loop
+
 class DataTransporter:
     """Abstract base class for all sensor processors.
 

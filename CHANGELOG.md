@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.5.6](https://github.com/isu-avista/sensors/releases/tag/v0.5.6) - 2021-03-31
+### Added
+* Added a CT Sensor implementation, it needs updated and shouldn't be used currently
+
+### Changed
+* Updated sensor sweep periodicity from 3 seconds to 30 seconds
+* Fixed IRTemperature sensor implementation
+* Fixed RPM sensor implementation 
+
+### Deleted
+
 ## [0.5.5](https://github.com/isu-avista/sensors/releases/tag/v0.5.5) - 2021-03-12
 ### Added
 * Added method to `generate_configs.py` that creates log directory and log file if they do not exist

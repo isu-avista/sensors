@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to Avista-Sensors’s documentation! &#8212; Avista-Sensors 0.5.5 documentation</title>
+    <title>Welcome to Avista-Sensors’s documentation! &#8212; Avista-Sensors 0.5.6 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.5.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.5.6 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to Avista-Sensors’s documentation!</a></li> 
       </ul>
     </div>  
@@ -426,26 +426,17 @@ if something needs to be setup after a sensor is loaded from the database</p>
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avista_sensors.impl.irbeam_processor.</span></code><code class="sig-name descname"><span class="pre">IRBeamProcessor</span></code><a class="reference internal" href="_modules/avista_sensors/impl/irbeam_processor.html#IRBeamProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avista_sensors.impl.irbeam_processor.IRBeamProcessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>IR Break Beam sensor implementation</p>
 <dl>
-<dt>Attributes:</dt><dd><p><strong>channel (int)</strong>: adc converter channel</p>
-<p><strong>blades (int)</strong>:</p>
-<p><strong>_sample (int)</strong>:</p>
-<p><strong>_count (int)</strong>:</p>
-<p><strong>_start (int)</strong>: start time</p>
-<p><strong>_end (int)</strong>: end time</p>
-<p><strong>_finished (bool)</strong>:</p>
-<p><strong>_rpm (float)</strong>:</p>
+<dt>Attributes:</dt><dd><p><strong>channel (int)</strong>: GPIO Pin</p>
+<p><strong>blades (int)</strong>: Number of times per revolution that the beam is broken</p>
+<p><strong>_count (int)</strong>: Count of the number of times the beam is broken during the measurement period</p>
+<p><strong>_start (int)</strong>: time, in seconds since the epoch, when the measurment started</p>
+<p><strong>max_time (int)</strong>: the timespan of measurement, in seconds.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt id="avista_sensors.impl.irbeam_processor.IRBeamProcessor.callback">
 <code class="sig-name descname"><span class="pre">callback</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/impl/irbeam_processor.html#IRBeamProcessor.callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avista_sensors.impl.irbeam_processor.IRBeamProcessor.callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event based callback method that is executed when the sensor is read from</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="avista_sensors.impl.irbeam_processor.IRBeamProcessor.set_end">
-<code class="sig-name descname"><span class="pre">set_end</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avista_sensors/impl/irbeam_processor.html#IRBeamProcessor.set_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avista_sensors.impl.irbeam_processor.IRBeamProcessor.set_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the end time of the sensor</p>
 </dd></dl>
 
 <dl class="py method">
@@ -591,7 +582,7 @@ if something needs to be setup after a sensor is loaded from the database</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.5.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">Avista-Sensors 0.5.6 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to Avista-Sensors’s documentation!</a></li> 
       </ul>
     </div>

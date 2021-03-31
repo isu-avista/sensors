@@ -27,16 +27,17 @@ class IRTempProcessor(SensorProcessor):
     def setup(self):
         """Sets up sensor configurations that should happen after loading from the database"""
         self._address = int(self._parameters['address'], 16)
-        self._bus_id = int(self._parameters['bus_id'])
-        self._bus = SMBus(self._bus_id)
-        self._sensor = MLX90614(self._bus, address=self._address)
-
+        self._bus_id = int(self._parameters['bus_id'])        
+        
     def _read_sensor(self, ts):
         """Reads data from the sensor
 
         Args:
             **ts (int)**: timestamp of when the data was read
-        """
+        """        
+        self._bus = SMBus(self._bus_id)
+        self._sensor = MLX90614(self._bus, address=self._address)
+                
         data = {
             "ambient": self._sensor.get_ambient(),
             "object": self._sensor.get_object_1()

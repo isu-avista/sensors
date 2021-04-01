@@ -58,7 +58,7 @@ class IRBeamProcessor(SensorProcessor):
 
         GPIO.remove_event_detect(self.channel)
         
-        minutes = (time.time() - self._start()) / 60
+        minutes = (time.time() - self._start) / 60
         rpm = (self._count / minutes) / self.blades
 
         data = {

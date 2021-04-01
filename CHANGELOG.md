@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deleted
 
+## [0.5.7](https://github.com/isu-avista/sensors/releases/tag/v0.5.7) - 2021-04-01
+### Added
+
+### Changed
+* Fixed an error in irbeam_processor.py
+
+### Deleted
+
 ## [0.5.6](https://github.com/isu-avista/sensors/releases/tag/v0.5.6) - 2021-03-31
 ### Added
 * Added a CT Sensor implementation, it needs updated and shouldn't be used currently
